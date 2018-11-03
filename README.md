@@ -6,6 +6,13 @@ use _./mvnw package_ to build
 
 and _java -jar target/demo-0.0.1-SNAPSHOT.jar_ to run.
 
+# Build with gradle
+use _gradle build_ to build
+
+and _gradle bootRun_ to run
+
+The _bootRun_ task runs the web app in an embedded instance of Tomcat. The _curl_ calls in **Testing** work for both.
+
 # Testing
 There are two API calls, one that uses GET and one that uses POST
 
@@ -29,15 +36,16 @@ use curl to post the information for a StudentRegistration bean. The (json) info
 
 using the _-d @<filename>_ option of curl and the _-H_ option to add the _Content-Type:_ header value _application/json_. The post data is in _src/test/resources/post_doc_1.json_
 
-_curl -H 'Content-Type: application/json' -d @src/test/resources/post_doc_1.json http://localhost:8083/register/student_
+_curl -H 'Content-Type: application/json' -d @src/test/resources/post\_doc\_1.json http://localhost:8083/register/student_
 
 # TODO
 
-* move from maven to gradle
+* move from maven to gradle  
+  Easy to do: _gradle init_ makes the needed stuff, edited to update and added spring-boot plugin.
 * compare this to a Spring MVC web application
 * Design Web API
   
-## Entry points:
+## Web API Entry points:
 1. version  
 GET: Return the version of the service. This will serve also as a 'heart beat'
 2. comment  
