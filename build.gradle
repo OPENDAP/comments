@@ -1,7 +1,15 @@
 
 plugins {
 	id 'java'
+	id 'war'
+
+	// See https://docs.spring.io/spring-boot/docs/current/gradle-plugin/reference/html/
+	// for information about features of the org.springframework.boot plugin.
 	id 'org.springframework.boot' version '2.1.0.RELEASE'
+
+	// Using 'io.spring.dependency-management' would make it so that the 
+	// versions could be left off of the dependencies.
+	// id 'io.spring.dependency-management'
 }
 
 group = 'org.opendap'
@@ -12,9 +20,11 @@ description = """comments"""
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
-tasks.withType(JavaCompile) {
-	options.encoding = 'UTF-8'
-}
+// Using org.springframework.boot configures UTF-8 by default 
+//
+// tasks.withType(JavaCompile) {
+//     options.encoding = 'UTF-8'
+// }
 
 repositories {
 	mavenCentral()
@@ -27,4 +37,28 @@ dependencies {
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version:'2.1.0.RELEASE'
 
     testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version:'2.1.0.RELEASE'
+    
+    // with org.springframework.boot
+    // providedRuntime will add libraries to WEB-INF/lib-provided.
 }
+
+// When using the plugin org.springframework.boot, the jar and war tasks are
+// disabled by default in favor of the bootJar/bootWar tasks. This section enables
+// them and adds '-boot' to the name of the bootable jar/war files, so that 
+// the jar and bootJar don't over write each other (same for war/bootWar) 
+jar {
+	enabled = true
+}
+
+bootJar {
+	classifier = 'boot'
+}
+
+war {
+	enabled = true
+}
+
+bootWar {
+	classifier = 'boot'
+}
+
