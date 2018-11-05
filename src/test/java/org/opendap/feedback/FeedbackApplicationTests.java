@@ -1,4 +1,4 @@
-package org.opendap.comments;
+package org.opendap.feedback;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
