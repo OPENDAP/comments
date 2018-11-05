@@ -45,16 +45,16 @@ _curl -H 'Content-Type: application/json' -d @src/test/resources/post\_doc\_1.js
 - [ ] Compare this to a Spring MVC web application
 - [x] Design Web API  
   See below
-- [ ] Rename to _feedback_
+- [x] Rename to _feedback_
   
 ## Web API Entry points:
 1. version  
    GET: Return the version of the service. This will serve also as a 'heart beat.' Implement this using 
-   _/comments/version_
+   _/feedback/version_ DONE. Reads version number from _application.properties_
 2. comment  
-   POST: Takes a URL '{"url": <URL>}' and returns the comment form: /comments/form.
-   For the response, use /comments/add
+   POST: Takes a URL '{"url": <URL>}' and returns the comment form: /feedback/form.
+   For the response, use /feedback/add
 3. info  
-   GET: Return information from the comment database for the given _url_. Use /comments/read
+   GET: Return information from the comment database for the given _url_. Use /feedback/read
    
    
