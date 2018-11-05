@@ -8,10 +8,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 // The scanBasePackages sets the component path, enabling the application to find its controller
 // classes.
 @SpringBootApplication(scanBasePackages = {"org.opendap"})
-public class CommentsApplication {
+public class FeedbackApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(CommentsApplication.class, args);
+		SpringApplication.run(FeedbackApplication.class, args);
 	}
 	
 }

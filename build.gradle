@@ -15,7 +15,7 @@ plugins {
 group = 'org.opendap'
 version = '0.0.1-SNAPSHOT'
 
-description = """comments"""
+description = """feedback"""
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8

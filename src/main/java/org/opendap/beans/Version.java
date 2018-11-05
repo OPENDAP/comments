@@ -1,17 +1,17 @@
 package org.opendap.beans;
 
 /**
- * @brief Response from the /welcome/user end point
+ * @brief Response from the /feedback/version end point
  * @author jimg
  */
-public class Welcome {
+public class Version {
 
-	public Welcome(String message) {
+	private final String message;
+
+	public Version(String message) {
 		super();
 		this.message = message;
 	}
-
-	private final String message;
 
 	public String getMessage() {
 		return message;

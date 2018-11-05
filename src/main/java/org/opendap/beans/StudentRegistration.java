@@ -1,5 +1,9 @@
 package org.opendap.beans;
 
+/**
+ * @brief values read from POST to the /student/register endpoint
+ * @author jimg
+ */
 public class StudentRegistration {
 
 	String name;
