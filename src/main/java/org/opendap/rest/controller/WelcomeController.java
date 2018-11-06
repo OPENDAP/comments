@@ -16,6 +16,7 @@ public class WelcomeController {
 	@GetMapping("/welcome/user")
 	@ResponseBody
 	public Welcome welcomeUser(@RequestParam(name = "name", required = false, defaultValue = "Java Fan") String name) {
+		System.out.println("Before calling Welcome ctor");
 		return new Welcome(String.format(welcomemsg, name));
 	}
 
