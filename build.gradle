@@ -9,7 +9,7 @@ plugins {
 
 	// Using 'io.spring.dependency-management' would make it so that the 
 	// versions could be left off of the dependencies.
-	// id 'io.spring.dependency-management'
+	//id 'io.spring.dependency-management'
 }
 
 group = 'org.opendap'
@@ -20,12 +20,6 @@ description = """feedback"""
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
-// Using org.springframework.boot configures UTF-8 by default 
-//
-// tasks.withType(JavaCompile) {
-//     options.encoding = 'UTF-8'
-// }
-
 repositories {
 	mavenCentral()
     // maven { url "http://repo.maven.apache.org/maven2" }
@@ -35,17 +29,35 @@ dependencies {
     compile group: 'org.springframework.boot', name: 'spring-boot-starter', version:'2.1.0.RELEASE'
     compile group: 'org.springframework', name: 'spring-web', version:'5.1.2.RELEASE'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version:'2.1.0.RELEASE'
-
+    // compile group: 'org.springframework.boot', name: 'spring-boot-starter-log4j2', version:'2.1.0.RELEASE'
+    
+    // Add SLF4j. http://makble.com/gradle-slf4j-integration-example-with-eclipse
+    // NB: By using 'spring-boot-starter' above, ch.qos.logback is included automatically,
+    // which will conflict with this. I wanted to see how hard it would be to deviate from
+    // the stock sprint boot tools (about 2 hours...). Also see the exclude configuration
+    // below. jhrg 11/6/18
+    compile group: 'org.slf4j', name:'slf4j-api', version: '1.7.2'
+    compile group: 'org.slf4j', name:'slf4j-simple', version: '1.7.2'
+    // compile group: 'org.slf4j', name:'slf4j-log4j12', version: '1.7.2'
+    
     testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version:'2.1.0.RELEASE'
     
     // with org.springframework.boot
     // providedRuntime will add libraries to WEB-INF/lib-provided.
 }
 
+configurations {
+    all {
+        // Exclude the '...starter-loggin' stuff if you want to use something other than
+        // the ch.qos.Logback code
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+    }
+}
+
 // When using the plugin org.springframework.boot, the jar and war tasks are
 // disabled by default in favor of the bootJar/bootWar tasks. This section enables
 // them and adds '-boot' to the name of the bootable jar/war files, so that 
-// the jar and bootJar don't over write each other (same for war/bootWar) 
+// the jar and bootJar don't over write each other (same for war/bootWar). jhrg 11/5/18
 jar {
 	enabled = true
 }
