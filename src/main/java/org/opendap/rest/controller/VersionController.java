@@ -30,6 +30,7 @@ public class VersionController {
 	
 	// Read feedback.version from the 'application.properties'. see
 	// http://www.appsdeveloperblog.com/reading-application-properties-spring-boot/
+	// NB: JUnit4 does not support @Value
 	// @Value("${feedback.version}")
 	// private String version_number;
 	
