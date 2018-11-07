@@ -1,7 +1,19 @@
 
+buildscript {
+    repositories {
+        //Required repos
+        mavenCentral()
+    }
+    dependencies {
+        //Required dependency for spring-boot plugin
+        classpath 'org.springframework.boot:spring-boot-gradle-plugin:2.1.0.RELEASE'
+    }
+}
+
 plugins {
 	id 'java'
 	id 'war'
+	id 'eclipse'
 
 	// See https://docs.spring.io/spring-boot/docs/current/gradle-plugin/reference/html/
 	// for information about features of the org.springframework.boot plugin.
@@ -9,7 +21,8 @@ plugins {
 
 	// Using 'io.spring.dependency-management' would make it so that the 
 	// versions could be left off of the dependencies.
-	//id 'io.spring.dependency-management'
+	id "io.spring.dependency-management" version "1.0.6.RELEASE"
+	
 }
 
 group = 'org.opendap'
@@ -22,34 +35,39 @@ targetCompatibility = 1.8
 
 repositories {
 	mavenCentral()
-    // maven { url "http://repo.maven.apache.org/maven2" }
 }
 
 dependencies {
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter', version:'2.1.0.RELEASE'
-    compile group: 'org.springframework', name: 'spring-web', version:'5.1.2.RELEASE'
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version:'2.1.0.RELEASE'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter' // version:'2.1.0.RELEASE'
+    compile group: 'org.springframework', name: 'spring-web' // version:'5.1.2.RELEASE'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web' // version:'2.1.0.RELEASE'
     // compile group: 'org.springframework.boot', name: 'spring-boot-starter-log4j2', version:'2.1.0.RELEASE'
     
+    // Added tomcat-embed-jasper and jstl for jsp view support. jhrg 11/7/18
+    compile group: 'org.apache.tomcat.embed', name: 'tomcat-embed-jasper' // version: '9.0.10'
+    compile group: 'javax.servlet', name: 'jstl' // version: '1.2'
+
     // Add SLF4j. http://makble.com/gradle-slf4j-integration-example-with-eclipse
     // NB: By using 'spring-boot-starter' above, ch.qos.logback is included automatically,
-    // which will conflict with this. I wanted to see how hard it would be to deviate from
-    // the stock sprint boot tools (about 2 hours...). Also see the exclude configuration
-    // below. jhrg 11/6/18
-    compile group: 'org.slf4j', name:'slf4j-api', version: '1.7.2'
-    compile group: 'org.slf4j', name:'slf4j-simple', version: '1.7.2'
+    // which will conflict with these simpler implementations. I wanted to see how hard it
+    // would be to deviate from the stock sprint boot tools (about 2 hours...). Also see 
+    // the exclude configuration below, which is needed. jhrg 11/6/18
+    compile group: 'org.slf4j', name:'slf4j-api' // version: '1.7.2'
+    compile group: 'org.slf4j', name:'slf4j-simple' // version: '1.7.2'
+    
+    // A slightly less simple slf4j impl that still uses a properties file. jhrg 11/7/18
     // compile group: 'org.slf4j', name:'slf4j-log4j12', version: '1.7.2'
     
-    testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version:'2.1.0.RELEASE'
+    testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test' // version:'2.1.0.RELEASE'
     
-    // with org.springframework.boot
-    // providedRuntime will add libraries to WEB-INF/lib-provided.
+    //providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 }
 
 configurations {
     all {
         // Exclude the '...starter-loggin' stuff if you want to use something other than
-        // the ch.qos.Logback code
+        // the ch.qos.Logback code. Without this, there will be errors about having two
+        // conflicting implementations of slf4j. jhrg 11/7/18
         exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
     }
 }
