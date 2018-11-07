@@ -24,8 +24,8 @@ public class FeedbackFormController {
 	 
 	@RequestMapping(value = "/feedback/form", method = RequestMethod.GET)
 	public ModelAndView feedbackForm(@RequestParam(name = "url", required = false, defaultValue = "http://localhost:8080/opendap/") String url) {
-		FeedbackForm ffb = new FeedbackForm();
-		ffb.setUrl(url);
+		FeedbackForm ffb = new FeedbackForm(url);
+		//ffb.setUrl(url);
 		return new ModelAndView("feedback_form", "feedback_form_info", ffb);
 	}
 	

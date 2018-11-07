@@ -8,8 +8,8 @@ package org.opendap.beans;
 public class FeedbackData {
 	private String url;
 
-	public void setUrl(String name) {
-		this.url = name;
+	public void setUrl(String url) {
+		this.url = url;
 	}
 
 	public String getUrl() {
