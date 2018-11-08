@@ -60,7 +60,10 @@ dependencies {
     
     testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test' // version:'2.1.0.RELEASE'
     
-    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+    // These are not needed when a war file is run inside tomcat. Marking these 
+    // as 'provided at runtime' does not break the 'bootRun' target.
+    providedRuntime group: 'org.springframework.boot', name: 'spring-boot-starter-tomcat'
+    providedRuntime group: 'org.apache.tomcat.embed', name: 'tomcat-embed-jasper'
 }
 
 configurations {
@@ -76,13 +79,15 @@ configurations {
 // disabled by default in favor of the bootJar/bootWar tasks. This section enables
 // them and adds '-boot' to the name of the bootable jar/war files, so that 
 // the jar and bootJar don't over write each other (same for war/bootWar). jhrg 11/5/18
-jar {
-	enabled = true
-}
-
-bootJar {
-	classifier = 'boot'
-}
+// 
+// I don't think we need the plain jar file... jhrg 11/8/18
+//jar {
+//	enabled = true
+//}
+//
+//bootJar {
+//	classifier = 'boot'
+//}
 
 war {
 	enabled = true
