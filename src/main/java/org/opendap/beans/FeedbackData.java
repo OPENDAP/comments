@@ -7,6 +7,7 @@ package org.opendap.beans;
 // HTML form.
 public class FeedbackData {
 	private String url;
+	private String datasetComment;
 
 	public void setUrl(String url) {
 		this.url = url;
@@ -14,6 +15,14 @@ public class FeedbackData {
 
 	public String getUrl() {
 		return url;
+	}
+
+	public String getDatasetComment() {
+		return datasetComment;
+	}
+
+	public void setDatasetComment(String datasetComment) {
+		this.datasetComment = datasetComment;
 	}
 
 }

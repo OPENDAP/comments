@@ -36,34 +36,11 @@
 
 		<div class="starter-template">
 			<h1>Spring Boot Web JSP Example</h1>
-			<h2>URL: ${feedback_form_info.url}</h2>
+			<h2>URL: ${form_info.url}</h2>
+			<h3>Dataset Comment</h3>
+			<p>${form_info.datasetComment}
+			</p>
 		</div>
-
-        <form action=""
-              method="post"
-              commandName="FeedbackData">
-            <p>
-                <textarea
-                        style="font-family:courier;
-                               margin-left: 5px;
-                               margin-right: 5px;
-                               max-width: 99%;
-                               width: 99%;
-                               background: rgba(255, 0, 0, 0.03);"
-                        id="datasetComment"
-                        name="datasetComment"
-                        rows="20"
-                        cols="80">
-                    
-                </textarea>
-            </p>
-            <input type = "submit" value = "Submit" />
-            <!--  input type="reset"/ -->
-        </form>
-
-        <!--  button onclick="setBesConfig('','');">
-            Save <%-- <%=currentModule.getShortName()%> --%> module configuration
-        </button -->
 
 	</div>
 	

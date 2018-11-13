@@ -14,6 +14,7 @@ plugins {
 	id 'java'
 	id 'war'
 	id 'eclipse'
+	// id 'application' part of a failed attempt to get Debugging working in eclipse
 
 	// See https://docs.spring.io/spring-boot/docs/current/gradle-plugin/reference/html/
 	// for information about features of the org.springframework.boot plugin.
@@ -24,6 +25,8 @@ plugins {
 	id "io.spring.dependency-management" version "1.0.6.RELEASE"
 	
 }
+
+// mainClassName = "org.opendap.feedbak.FeedbackApplication" same as 'id application' above
 
 group = 'org.opendap'
 version = '0.0.1-SNAPSHOT'

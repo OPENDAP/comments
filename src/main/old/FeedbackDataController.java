@@ -18,10 +18,11 @@ import org.springframework.ui.ModelMap;
 public class FeedbackDataController {
 
 	@RequestMapping(value = "/feedback/add", method = RequestMethod.POST)
-	public String addFeedbackData(@ModelAttribute("SpringWeb") FeedbackData feedbackData, ModelMap model) {
+	public ModelAndView addFeedbackData(@ModelAttribute("FeedbackData") FeedbackData feedbackData, ModelMap model) {
 		model.addAttribute("url", feedbackData.getUrl());
+		model.addAttribute("datasetComment", feedbackData.getDatasetComment());
 
-		return "result";
+		return new ModelAndView("form_result", "form_info", feedbackData);
 	}
 	
 }
