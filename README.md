@@ -46,23 +46,17 @@ using the _-d @<filename>_ option of curl and the _-H_ option to add the _Conten
 
 *curl -H 'Content-Type: application/json' -d @src/test/resources/post\_doc\_1.json http://localhost:8083/register/student*
 
-# TODO
+# Eclipse debugging
 
-- [x] Move from maven to gradle  
-  Easy to do: _gradle init_ makes the needed stuff, edited to update and added spring-boot plugin.
-- [ ] Compare this to a Spring MVC web application
-- [x] Design Web API  
-  See below
-- [x] Rename to _feedback_
+Goto the project Properties menu item and edit the 'Build Path -> Configure Build Path...' so that it names the 'build/classes/...' directories that gradle uses and not the 'bin' directories that Eclipse uses by default. We could probably configure the gradle build to put the built code into the 'bin' dirs - I sorted that out once before...
   
 ## Web API Entry points:
 1. version  
    GET: Return the version of the service. This will serve also as a 'heart beat.' Implement this using 
    _/feedback/version_ DONE. Reads version number from _application.properties_
 2. comment  
-   POST: Takes a URL '{"url": <URL>}' and returns the comment form: /feedback/form.
-   For the response, use /feedback/add. This is partly working. The response returns a jsp page.
-   I still have to code the form. 
+   GET: Takes a URL '{"url": <URL>}' and returns the comment form: /feedback/form.
+   For the response, use POST to /feedback/form. This is partly working. The response returns a jsp page.
 3. info  
    GET: Return information from the comment database for the given _url_. Use /feedback/read
    
