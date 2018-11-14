@@ -27,19 +27,18 @@ public class FeedbackFormController {
 	private String url;
 	 
 	public String getUrl() {
-		log.debug("Get URL: {}\n", url);
 		return url;
 	}
 
 	public void setUrl(String url) {
-		log.debug("Set URL: {}\n", url);
 		this.url = url;
 	}
 
 	@RequestMapping(value = "/feedback/form", method = RequestMethod.GET)
 	public ModelAndView feedbackForm(@RequestParam(name = "url", required = false, defaultValue = "http://localhost:8080/opendap/") String url) {
-		setUrl(url);
+		setUrl(url);	// Save for later
 		FeedbackForm ffb = new FeedbackForm(url);
+		
 		// Args: name of the view to render, name of the model in that view and the model. jhrg 11/9/18
 		return new ModelAndView("feedback_form", "feedback_form_info", ffb);
 	}
