@@ -8,12 +8,8 @@
 		Spring boot will handle the resource mapping automcatically -->
 	<link rel="stylesheet" type="text/css" href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
 
-	<!-- 
 	<spring:url value="/css/main.css" var="springCss" />
 	<link href="${springCss}" rel="stylesheet" />
-	 -->
-	<c:url value="/css/main.css" var="jstlCss" />
-	<link href="${jstlCss}" rel="stylesheet" />
 
 </head>
 <body>
@@ -35,7 +31,7 @@
 	<div class="container">
 
 		<div class="starter-template">
-			<h1>Spring Boot Web JSP Example</h1>
+			<h1>Dataset Feedback form</h1>
 			<h2>URL: ${form_info.url}</h2>
 			<h3>Dataset Comment</h3>
 			<p>${form_info.datasetComment}

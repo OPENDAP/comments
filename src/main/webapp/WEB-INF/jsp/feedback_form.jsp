@@ -4,16 +4,13 @@
 <html lang="en">
 <head>
 
-	<!-- Access the bootstrap Css like this, 
+	<!-- Access the bootstrap CSS like this, 
 		Spring boot will handle the resource mapping automcatically -->
 	<link rel="stylesheet" type="text/css" href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
 
-	<!-- 
+
 	<spring:url value="/css/main.css" var="springCss" />
 	<link href="${springCss}" rel="stylesheet" />
-	 -->
-	<c:url value="/css/main.css" var="jstlCss" />
-	<link href="${jstlCss}" rel="stylesheet" />
 
 </head>
 <body>
@@ -35,13 +32,11 @@
 	<div class="container">
 
 		<div class="starter-template">
-			<h1>Spring Boot Web JSP Example</h1>
+			<h1>Dataset Feedback form</h1>
 			<h2>URL: ${feedback_form_info.url}</h2>
 		</div>
 
-        <form action=""
-              method="post"
-              commandName="FeedbackData">
+        <form action="" method="post">
             <p>
                 <textarea
                         style="font-family:courier;
@@ -53,17 +48,10 @@
                         id="datasetComment"
                         name="datasetComment"
                         rows="20"
-                        cols="80">
-                    
-                </textarea>
+                        cols="80">Add your comment here...</textarea>
             </p>
             <input type = "submit" value = "Submit" />
-            <!--  input type="reset"/ -->
         </form>
-
-        <!--  button onclick="setBesConfig('','');">
-            Save <%-- <%=currentModule.getShortName()%> --%> module configuration
-        </button -->
 
 	</div>
 	

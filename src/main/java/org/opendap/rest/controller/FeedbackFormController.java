@@ -44,11 +44,12 @@ public class FeedbackFormController {
 	}
 	
 	@RequestMapping(value = "/feedback/form", method = RequestMethod.POST)
-	public ModelAndView addFeedbackData(@ModelAttribute("FeedbackData") FeedbackData feedbackData, ModelMap model) {
-		log.debug("in addFeedbackData URL: {}\n", url);
-		model.addAttribute("url", getUrl());
-		model.addAttribute("datasetComment", feedbackData.getDatasetComment());
-
+	public ModelAndView addFeedbackData(@ModelAttribute("FeedbackData") FeedbackData feedbackData) {
+		log.debug("in addFeedbackData URL: {}\n", getUrl());
+		feedbackData.setUrl(getUrl());
+		
+		// Write data to MongoDB here...
+		
 		return new ModelAndView("form_result", "form_info", feedbackData);
 	}
 	

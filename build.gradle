@@ -42,7 +42,7 @@ dependencies {
     compile group: 'org.springframework', name: 'spring-web'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-web'
     // compile group: 'org.springframework.boot', name: 'spring-boot-starter-log4j2'
-    //compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-mongodb'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-mongodb'
     
     // Added tomcat-embed-jasper and jstl for jsp view support. jhrg 11/7/18
     compile group: 'org.apache.tomcat.embed', name: 'tomcat-embed-jasper'
