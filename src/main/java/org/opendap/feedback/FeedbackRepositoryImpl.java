@@ -25,19 +25,26 @@ public class FeedbackRepositoryImpl implements FeedbackRepositoryCustom {
 	MongoTemplate mongoTemplate;
 
 	@Override
-	public long updateFeedbackData(String url, String comment) {
+	public long updateFeedbackData(FeedbackData fbd) {
 
-		Query query = new Query(Criteria.where("url").is(url));
+		Query query = new Query(Criteria.where("url").is(fbd.getUrl()));
 		Update update = new Update();
-		update.set("comment", comment);
+		update.set("url", fbd.getDatasetComment());
 
 		UpdateResult result = mongoTemplate.updateFirst(query, update, FeedbackData.class);
 
 		if (result != null)
 			return result.getModifiedCount();
-			// FIXMEreturn result.getN();
 		else
 			return 0;
 
+	}
+
+	@Override
+	public void writeFeedbackData(FeedbackData fbd) {
+		FeedbackData result = mongoTemplate.insert(fbd);
+
+		// TODO Throw some kind of exception if (result != null)
+			
 	}
 }

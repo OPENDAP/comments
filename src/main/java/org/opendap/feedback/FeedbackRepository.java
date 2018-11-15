@@ -14,7 +14,7 @@ public interface FeedbackRepository extends MongoRepository<FeedbackData, Long>,
 
 	// TODO FeedbackData findByDomainAndUser(String url, String user);
 
-    //Supports native JSON query string
+    /// Supports native JSON query string
 	
 	/*
 	 * maybe these will be useful someday? jhrg

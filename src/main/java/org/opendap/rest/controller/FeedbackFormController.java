@@ -5,9 +5,11 @@ package org.opendap.rest.controller;
 
 import org.opendap.beans.FeedbackData;
 import org.opendap.beans.FeedbackForm;
+import org.opendap.feedback.FeedbackRepositoryCustom;
+import org.opendap.feedback.FeedbackRepositoryImpl;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
+// import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -49,6 +51,9 @@ public class FeedbackFormController {
 		feedbackData.setUrl(getUrl());
 		
 		// Write data to MongoDB here...
+		// public void writeFeedbackData(FeedbackData fbd)
+		FeedbackRepositoryCustom fbrc = new FeedbackRepositoryImpl();
+		fbrc.writeFeedbackData(feedbackData);
 		
 		return new ModelAndView("form_result", "form_info", feedbackData);
 	}

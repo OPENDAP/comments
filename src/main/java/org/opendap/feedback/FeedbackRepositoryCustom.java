@@ -1,9 +1,20 @@
 package org.opendap.feedback;
 
-/// @see FeedbackRepositoryImpl
+import org.opendap.beans.FeedbackData;
+
+/**
+ * @brief modify the comment database
+ * 
+ * @author jimg
+ * @see FeedbackRepositoryImpl
+ */
 public interface FeedbackRepositoryCustom {
 
-    long updateFeedbackData(String url, String comment);
+	/// Update an existing comment entry
+    long updateFeedbackData(FeedbackData fbd);
+    
+    /// write a new comment entry
+    void writeFeedbackData(FeedbackData fbd);
 
 }
 
