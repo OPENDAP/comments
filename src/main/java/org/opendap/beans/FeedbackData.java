@@ -35,6 +35,10 @@ public class FeedbackData {
 		setComment(comment);
 	}
 
+	public void setId(String id) {
+        this.id = id;
+    }
+	
 	public String getId() {
 		return id;
 	}
@@ -58,7 +62,8 @@ public class FeedbackData {
     @Override
     public String toString() {
         return "FeedbackData{" +
-                "url='" + url + '\'' +
+        		"id='" + id + '\'' +
+                ",url='" + url + '\'' +
                 ", comment=" + comment +
                 '}';
     }

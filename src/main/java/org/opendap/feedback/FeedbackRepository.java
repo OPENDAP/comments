@@ -11,6 +11,8 @@ import java.util.List;
 public interface FeedbackRepository extends MongoRepository<FeedbackData, Long>, FeedbackRepositoryCustom {
 
 	FeedbackData findFirstByUrl(String url);
+	
+	FeedbackData findByUrl(String url);
 
 	// TODO FeedbackData findByDomainAndUser(String url, String user);
 
@@ -21,8 +23,9 @@ public interface FeedbackRepository extends MongoRepository<FeedbackData, Long>,
 
     @Query("{domain:'?0'}")
     FeedbackData findCustomByDomain(String domain);
-
-    @Query("{domain: { $regex: ?0 } })")
-    List<FeedbackData> findCustomByRegExDomain(String domain);
 	*/
+	
+    @Query("{domain: { $regex: ?0 } })")
+    List<FeedbackData> findCustomByRegExUrl(String url);
+
 }
