@@ -19,17 +19,26 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * @author jimg
  */
  
-@Document(collection = "feedback")
+@Document(collection = "FeedbackData")
 public class FeedbackData {
     @Id
     private String id;
     @Indexed
 	private String url;
     
-    // TODO private String user;
+    // TODO Add: 'private String user;' once athentication works
     
 	private String comment;
 
+	public FeedbackData(String url1, String comment) {
+		setUrl(url);
+		setComment(comment);
+	}
+
+	public String getId() {
+		return id;
+	}
+	
 	public void setUrl(String url) {
 		this.url = url;
 	}
@@ -38,19 +47,19 @@ public class FeedbackData {
 		return url;
 	}
 
-	public String getDatasetComment() {
+	public String getComment() {
 		return comment;
 	}
 
-	public void setDatasetComment(String datasetComment) {
-		this.comment = datasetComment;
+	public void setComment(String comment) {
+		this.comment = comment;
 	}
 
     @Override
     public String toString() {
         return "FeedbackData{" +
-                "Url='" + url + '\'' +
-                ", datasetComment=" + comment +
+                "url='" + url + '\'' +
+                ", comment=" + comment +
                 '}';
     }
 

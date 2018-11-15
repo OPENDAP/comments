@@ -29,7 +29,7 @@ public class FeedbackRepositoryImpl implements FeedbackRepositoryCustom {
 
 		Query query = new Query(Criteria.where("url").is(fbd.getUrl()));
 		Update update = new Update();
-		update.set("url", fbd.getDatasetComment());
+		update.set("url", fbd.getComment());
 
 		UpdateResult result = mongoTemplate.updateFirst(query, update, FeedbackData.class);
 
