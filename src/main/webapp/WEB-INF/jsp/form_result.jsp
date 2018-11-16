@@ -34,7 +34,7 @@
 			<h1>Dataset Feedback form</h1>
 			<h2>URL: ${form_info.url}</h2>
 			<h3>Dataset Comment</h3>
-			<p>${form_info.datasetComment}
+			<p>${form_info.comment}
 			</p>
 		</div>
 

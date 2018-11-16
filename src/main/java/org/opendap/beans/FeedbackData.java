@@ -26,7 +26,7 @@ public class FeedbackData {
     @Indexed
 	private String url;
     
-    // TODO Add: 'private String user;' once athentication works
+    // TODO Add: 'private String user;' once authentication works
     
 	private String comment;
 

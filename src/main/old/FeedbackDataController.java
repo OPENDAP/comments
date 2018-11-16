@@ -20,7 +20,7 @@ public class FeedbackDataController {
 	@RequestMapping(value = "/feedback/add", method = RequestMethod.POST)
 	public ModelAndView addFeedbackData(@ModelAttribute("FeedbackData") FeedbackData feedbackData, ModelMap model) {
 		model.addAttribute("url", feedbackData.getUrl());
-		model.addAttribute("datasetComment", feedbackData.getDatasetComment());
+		model.addAttribute("comment", feedbackData.getComment());
 
 		return new ModelAndView("form_result", "form_info", feedbackData);
 	}
