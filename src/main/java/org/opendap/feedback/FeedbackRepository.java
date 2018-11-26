@@ -10,7 +10,7 @@ import java.util.List;
 // No need to provide an implementation, just one interface, and you have CRUD, thanks Spring Data
 public interface FeedbackRepository extends MongoRepository<FeedbackData, Long>, FeedbackRepositoryCustom {
 
-	FeedbackData findFirstByUrl(String url);
+	// FeedbackData findFirstByUrl(String url);
 	
 	FeedbackData findByUrl(String url);
 

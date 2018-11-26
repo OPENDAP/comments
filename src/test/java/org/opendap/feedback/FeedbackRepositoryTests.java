@@ -36,7 +36,7 @@ public class FeedbackRepositoryTests {
     @Test
     public void testFetchData(){
         /*Test data retrieval*/
-        FeedbackData fbd = feedbackRepository.findFirstByUrl(url2);
+        FeedbackData fbd = feedbackRepository.findByUrl(url2);
         assertNotNull(fbd);
         assertEquals("Comment2", fbd.getComment());
         /*Get all products, list should only have two*/
@@ -51,10 +51,11 @@ public class FeedbackRepositoryTests {
     @Test
     public void testDataUpdate(){
         /*Test update*/
-        FeedbackData fdb = feedbackRepository.findFirstByUrl(url2);
+        FeedbackData fdb = feedbackRepository.findByUrl(url2);
+        assertNotNull(fdb);
         fdb.setComment("Stuff");
         feedbackRepository.save(fdb);
-        FeedbackData fdb_2= feedbackRepository.findFirstByUrl(url2);
+        FeedbackData fdb_2= feedbackRepository.findByUrl(url2);
         assertNotNull(fdb_2);
         assertEquals("Stuff", fdb_2.getComment());
     }
