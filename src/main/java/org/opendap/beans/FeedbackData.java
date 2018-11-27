@@ -3,6 +3,8 @@
 
 package org.opendap.beans;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -14,13 +16,17 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * text commentary, but a more sophisticated web interface could support
  * information about every variable/attribute in the dataset.
  * 
- * This is the 'model' for the data in the database.
+ * This is the 'model' for the data in the database. The annotation
+ * @Document is not needed. It provides a way to name the MongoDB 
+ * collection something other than the class name (but in all lower case).
  * 
  * @author jimg
  */
  
 @Document(collection = "FeedbackData")
 public class FeedbackData {
+	private static final Logger log = LoggerFactory.getLogger(FeedbackData.class);
+
     @Id
     private String id;
     @Indexed
@@ -30,9 +36,11 @@ public class FeedbackData {
     
 	private String comment;
 
-	public FeedbackData(String url1, String comment) {
+	public FeedbackData(String url, String comment) {
 		setUrl(url);
 		setComment(comment);
+
+		log.debug("FeedbackData ctor: {}", this.toString());
 	}
 
 	public void setId(String id) {

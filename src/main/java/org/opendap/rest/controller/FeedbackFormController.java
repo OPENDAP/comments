@@ -5,9 +5,12 @@ package org.opendap.rest.controller;
 
 import org.opendap.beans.FeedbackData;
 import org.opendap.beans.FeedbackForm;
-import org.opendap.feedback.FeedbackRepositoryCustom;
-import org.opendap.feedback.FeedbackRepositoryImpl;
-
+import org.opendap.feedback.FeedbackRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+//import org.opendap.feedback.FeedbackRepositoryCustom;
+//import org.opendap.feedback.FeedbackRepositoryImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 // import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -18,14 +21,14 @@ import org.springframework.web.servlet.ModelAndView;
 //import org.springframework.web.bind.annotation.ModelAttribute;
 //import org.springframework.ui.ModelMap;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 @Controller
 public class FeedbackFormController {
 
 	private static final Logger log = LoggerFactory.getLogger(FeedbackFormController.class);
 	
+	@Autowired
+	private FeedbackRepository repository;
+
 	private String url;
 	 
 	public String getUrl() {
@@ -39,6 +42,13 @@ public class FeedbackFormController {
 	@RequestMapping(value = "/feedback/form", method = RequestMethod.GET)
 	public ModelAndView feedbackForm(@RequestParam(name = "url", required = false, defaultValue = "http://localhost:8080/opendap/") String url) {
 		setUrl(url);	// Save for later
+
+		FeedbackData fbd = repository.findByUrl(url);
+		if (fbd != null)
+			log.debug("Found info about URL: {}", fbd.toString());
+
+		// TODO Modify to initialize form with existing comment.
+
 		FeedbackForm ffb = new FeedbackForm(url);
 		
 		// Args: name of the view to render, name of the model in that view and the model. jhrg 11/9/18
@@ -52,8 +62,11 @@ public class FeedbackFormController {
 		
 		// Write data to MongoDB here...
 		// public void writeFeedbackData(FeedbackData fbd)
-		FeedbackRepositoryCustom fbrc = new FeedbackRepositoryImpl();
-		fbrc.writeFeedbackData(feedbackData);
+		// FeedbackRepositoryCustom fbrc = new FeedbackRepositoryImpl();
+		// fbrc.writeFeedbackData(feedbackData);
+
+		// Write data to MongoDB here...
+		repository.save(feedbackData);
 		
 		return new ModelAndView("form_result", "form_info", feedbackData);
 	}
