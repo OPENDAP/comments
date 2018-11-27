@@ -66,6 +66,10 @@ public class FeedbackFormController {
 		// fbrc.writeFeedbackData(feedbackData);
 
 		// Write data to MongoDB here...
+		// TODO Make this smarter so that an existing entry is 'updated'. Mongo DB
+		// does not like it when there are two entries with the same key. Or maybe
+		// I have to add a new find* method in the repository calss with list<>
+		// return type.
 		repository.save(feedbackData);
 		
 		return new ModelAndView("form_result", "form_info", feedbackData);
