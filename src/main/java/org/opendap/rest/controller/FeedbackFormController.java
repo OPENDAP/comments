@@ -43,11 +43,12 @@ public class FeedbackFormController {
 	public ModelAndView feedbackForm(@RequestParam(name = "url", required = false, defaultValue = "http://localhost:8080/opendap/") String url) {
 		setUrl(url);	// Save for later
 
-		FeedbackData fbd = repository.findByUrl(url);
-		if (fbd != null)
-			log.debug("Found info about URL: {}", fbd.toString());
-
-		// TODO Modify to initialize form with existing comment.
+		/*
+		 * FeedbackData fbd = repository.findByUrl(url); if (fbd != null)
+		 * log.debug("Found info about URL: {}", fbd.toString());
+		 */
+		// TODO Modify to initialize form with existing comment. Maybe use the
+		// FeedbackData object?
 
 		FeedbackForm ffb = new FeedbackForm(url);
 		
@@ -60,17 +61,15 @@ public class FeedbackFormController {
 		log.debug("in addFeedbackData URL: {}\n", getUrl());
 		feedbackData.setUrl(getUrl());
 		
-		// Write data to MongoDB here...
-		// public void writeFeedbackData(FeedbackData fbd)
-		// FeedbackRepositoryCustom fbrc = new FeedbackRepositoryImpl();
-		// fbrc.writeFeedbackData(feedbackData);
-
-		// Write data to MongoDB here...
-		// TODO Make this smarter so that an existing entry is 'updated'. Mongo DB
-		// does not like it when there are two entries with the same key. Or maybe
-		// I have to add a new find* method in the repository calss with list<>
-		// return type.
-		repository.save(feedbackData);
+		// Write/Update data to MongoDB here...
+		FeedbackData existing = repository.findByUrl(getUrl());
+		if (existing != null) {
+			String newComment = existing.getComment() + "\n" + feedbackData.getComment();
+			existing.setComment(newComment);
+			repository.save(existing);
+		} else {
+			repository.save(feedbackData);
+		}
 		
 		return new ModelAndView("form_result", "form_info", feedbackData);
 	}

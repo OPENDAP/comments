@@ -32,6 +32,7 @@
 
 		<div class="starter-template">
 			<h1>Dataset Feedback form</h1>
+			<h2>Username: ${form_info.user}</h2>
 			<h2>URL: ${form_info.url}</h2>
 			<h3>Dataset Comment</h3>
 			<p>${form_info.comment}

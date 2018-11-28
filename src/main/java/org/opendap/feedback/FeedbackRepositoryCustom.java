@@ -13,8 +13,5 @@ public interface FeedbackRepositoryCustom {
 	/// Update an existing comment entry
     long updateFeedbackData(FeedbackData fbd);
     
-    /// write a new comment entry
-    void writeFeedbackData(FeedbackData fbd);
-
 }
 

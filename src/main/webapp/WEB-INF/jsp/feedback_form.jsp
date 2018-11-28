@@ -37,18 +37,28 @@
 		</div>
 
         <form action="" method="post">
+        	<p>
+	        	<textarea style="font-family:courier;
+	            	margin-left: 5px;
+	                margin-right: 5px;
+	                max-width: 50%;
+	                background: rgba(255, 0, 0, 0.03);"
+	                id="user"
+	                name="user"
+	                rows="1"
+	                cols="80">Username</textarea>
+        	</p>
             <p>
-                <textarea
-                        style="font-family:courier;
-                               margin-left: 5px;
-                               margin-right: 5px;
-                               max-width: 99%;
-                               width: 99%;
-                               background: rgba(255, 0, 0, 0.03);"
-                        id="comment"
-                        name="comment"
-                        rows="20"
-                        cols="80">Add your comment here...</textarea>
+            	<textarea style="font-family:courier; 
+                	margin-left: 5px;
+                    margin-right: 5px;
+                    max-width: 99%;
+                    width: 99%;
+                    background: rgba(255, 0, 0, 0.03);"
+                    id="comment"
+                    name="comment"
+                    rows="20"
+                    cols="80">Add your comment here...</textarea>
             </p>
             <input type = "submit" value = "Submit" />
         </form>

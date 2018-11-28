@@ -31,8 +31,8 @@ public class FeedbackData {
     private String id;
     @Indexed
 	private String url;
-    
-    // TODO Add: 'private String user;' once authentication works
+	@Indexed
+	private String user;
     
 	private String comment;
 
@@ -57,6 +57,14 @@ public class FeedbackData {
 
 	public String getUrl() {
 		return url;
+	}
+
+	public String getUser() {
+		return user;
+	}
+
+	public void setUsername(String user) {
+		this.user = user;
 	}
 
 	public String getComment() {
