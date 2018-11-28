@@ -60,6 +60,8 @@ public class FeedbackFormController {
 	public ModelAndView addFeedbackData(@ModelAttribute("FeedbackData") FeedbackData feedbackData) {
 		log.debug("in addFeedbackData URL: {}\n", getUrl());
 		feedbackData.setUrl(getUrl());
+
+		log.debug("in addFeedbackData FeedbackData from form: {}\n", feedbackData.toString());
 		
 		// Write/Update data to MongoDB here...
 		FeedbackData existing = repository.findByUrl(getUrl());
