@@ -36,8 +36,9 @@ public class FeedbackData {
     
 	private String comment;
 
-	public FeedbackData(String url, String comment) {
+	public FeedbackData(String url, String user, String comment) {
 		setUrl(url);
+		setUser(user);
 		setComment(comment);
 
 		log.debug("FeedbackData ctor: {}", this.toString());
@@ -63,7 +64,7 @@ public class FeedbackData {
 		return user;
 	}
 
-	public void setUsername(String user) {
+	public void setUser(String user) {
 		this.user = user;
 	}
 
@@ -80,6 +81,7 @@ public class FeedbackData {
         return "FeedbackData{" +
         		"id='" + id + '\'' +
                 ",url='" + url + '\'' +
+				",user='" + user + '\'' +
                 ", comment=" + comment +
                 '}';
     }

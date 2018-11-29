@@ -1,31 +1,29 @@
 
 package org.opendap.feedback;
 
+import java.util.List;
+
 import org.opendap.beans.FeedbackData;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 
-import java.util.List;
-
 // No need to provide an implementation, just one interface, and you have CRUD, thanks Spring Data
-public interface FeedbackRepository extends MongoRepository<FeedbackData, Long>, FeedbackRepositoryCustom {
+// can add 'extends, FeedbackRepositoryCustom'
+public interface FeedbackRepository extends MongoRepository<FeedbackData, Long> {
 
-	// FeedbackData findFirstByUrl(String url);
+	/// We might want to find just the first comment.
+	FeedbackData findFirstByUrl(String url);
 	
-	FeedbackData findByUrl(String url);
+	/// There can be many comments about a given dataset, each by different users.
+	List<FeedbackData> findByUrl(String url);
 
-	// TODO FeedbackData findByDomainAndUser(String url, String user);
+	/// One User can comment on many datasets.
+	List<FeedbackData> findByUser(String user);
 
-    /// Supports native JSON query string
-	
-	/*
-	 * maybe these will be useful someday? jhrg
+	/// There can be only one comment per Url for each User.
+	FeedbackData findByUrlAndUser(String url, String user);
 
-    @Query("{domain:'?0'}")
-    FeedbackData findCustomByDomain(String domain);
-	*/
-	
+	/// Using a regex on the URL could be interesting.
     @Query("{domain: { $regex: ?0 } })")
     List<FeedbackData> findCustomByRegExUrl(String url);
-
 }

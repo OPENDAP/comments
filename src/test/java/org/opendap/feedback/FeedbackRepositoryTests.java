@@ -29,8 +29,10 @@ public class FeedbackRepositoryTests {
     
     @Before
     public void setUp() throws Exception {
-        FeedbackData fdb1= new FeedbackData(url1, "Comment1");
-        FeedbackData fdb2= new FeedbackData(url2, "Comment2");
+		this.repository.deleteAll();
+
+		FeedbackData fdb1 = new FeedbackData(url1, "foo", "Comment1");
+		FeedbackData fdb2 = new FeedbackData(url2, "foo", "Comment2");
         //save product, verify has ID value after save
         assertNull(fdb1.getId());
         assertNull(fdb2.getId());//null before save
@@ -47,7 +49,7 @@ public class FeedbackRepositoryTests {
     @Test
     public void testFetchData(){
         /*Test data retrieval*/
-        FeedbackData fbd = repository.findByUrl(url2);
+		FeedbackData fbd = repository.findFirstByUrl(url2);
         assertNotNull(fbd);
         assertEquals("Comment2", fbd.getComment());
         /*Get all products, list should only have two*/
@@ -62,11 +64,11 @@ public class FeedbackRepositoryTests {
     @Test
     public void testDataUpdate(){
         /*Test update*/
-        FeedbackData fdb = repository.findByUrl(url2);
+		FeedbackData fdb = repository.findFirstByUrl(url2);
         assertNotNull(fdb);
         fdb.setComment("Stuff");
         repository.save(fdb);
-        FeedbackData fdb_2= repository.findByUrl(url2);
+		FeedbackData fdb_2 = repository.findFirstByUrl(url2);
         assertNotNull(fdb_2);
         assertEquals("Stuff", fdb_2.getComment());
     }

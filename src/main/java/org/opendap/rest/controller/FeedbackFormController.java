@@ -43,13 +43,6 @@ public class FeedbackFormController {
 	public ModelAndView feedbackForm(@RequestParam(name = "url", required = false, defaultValue = "http://localhost:8080/opendap/") String url) {
 		setUrl(url);	// Save for later
 
-		/*
-		 * FeedbackData fbd = repository.findByUrl(url); if (fbd != null)
-		 * log.debug("Found info about URL: {}", fbd.toString());
-		 */
-		// TODO Modify to initialize form with existing comment. Maybe use the
-		// FeedbackData object?
-
 		FeedbackForm ffb = new FeedbackForm(url);
 		
 		// Args: name of the view to render, name of the model in that view and the model. jhrg 11/9/18
@@ -58,21 +51,24 @@ public class FeedbackFormController {
 	
 	@RequestMapping(value = "/feedback/form", method = RequestMethod.POST)
 	public ModelAndView addFeedbackData(@ModelAttribute("FeedbackData") FeedbackData feedbackData) {
-		log.debug("in addFeedbackData URL: {}\n", getUrl());
+
+		log.debug("addFeedbackData; Saved URL: {}\n", getUrl());
+
 		feedbackData.setUrl(getUrl());
 
-		log.debug("in addFeedbackData FeedbackData from form: {}\n", feedbackData.toString());
-		
 		// Write/Update data to MongoDB here...
-		FeedbackData existing = repository.findByUrl(getUrl());
+		FeedbackData existing = repository.findByUrlAndUser(getUrl(), feedbackData.getUser());
 		if (existing != null) {
-			String newComment = existing.getComment() + "\n" + feedbackData.getComment();
-			existing.setComment(newComment);
-			repository.save(existing);
+			existing.setComment(existing.getComment() + "\n" + feedbackData.getComment());
+			repository.save(existing); // an update operation
+
+			feedbackData = existing; // hack so the result form shows what was put in the DB
 		} else {
-			repository.save(feedbackData);
+			repository.save(feedbackData); // writes a new record
 		}
 		
+		log.debug("addFeedbackData; FeedbackData from form: {}\n", feedbackData.toString());
+
 		return new ModelAndView("form_result", "form_info", feedbackData);
 	}
 	
