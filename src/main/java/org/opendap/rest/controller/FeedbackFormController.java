@@ -3,6 +3,11 @@
 
 package org.opendap.rest.controller;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
+
 import org.opendap.beans.FeedbackData;
 import org.opendap.beans.FeedbackForm;
 import org.opendap.feedback.FeedbackRepository;
@@ -39,12 +44,40 @@ public class FeedbackFormController {
 		this.url = url;
 	}
 
+	String getUrlText(String url) throws Exception {
+		URL website = new URL(url);
+		URLConnection connection = website.openConnection();
+		BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+
+		StringBuilder response = new StringBuilder();
+		String inputLine;
+
+		while ((inputLine = in.readLine()) != null)
+			response.append(inputLine);
+
+		in.close();
+
+		return response.toString();
+	}
+
 	@RequestMapping(value = "/feedback/form", method = RequestMethod.GET)
-	public ModelAndView feedbackForm(@RequestParam(name = "url", required = false, defaultValue = "http://localhost:8080/opendap/") String url) {
+	public ModelAndView feedbackForm(
+			@RequestParam(name = "url", required = false, defaultValue = "http://test.opendap.org/opendap/") String url) {
 		setUrl(url);	// Save for later
 
-		FeedbackForm ffb = new FeedbackForm(url);
+		// Get the info response for the dataset. This shows that the form can be
+		// customized
+		// for each dataset.
+		String urlContent = "";
+		try {
+			urlContent = getUrlText(url + ".info");
+		} catch (Exception e) {
+			log.error("Could not get info for the dataset url: {}", url);
+			urlContent = "Could not get info for the dataset url";
+		}
 		
+		FeedbackForm ffb = new FeedbackForm(url, urlContent);
+
 		// Args: name of the view to render, name of the model in that view and the model. jhrg 11/9/18
 		return new ModelAndView("feedback_form", "feedback_form_info", ffb);
 	}

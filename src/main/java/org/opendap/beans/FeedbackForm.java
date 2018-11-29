@@ -7,6 +7,7 @@ package org.opendap.beans;
 // HTML form.
 public class FeedbackForm {
 	private String url;
+	private String datasetInfo;
 	
 	/**
 	 * @brief no-arg constructor.
@@ -14,7 +15,8 @@ public class FeedbackForm {
 	 * so I'm adding this in case Spring needs it.
 	 */
 	public FeedbackForm() {
-		this.url = "";
+		setUrl("");
+		setDatasetInfo("");
 	}
 	
 	/**
@@ -23,7 +25,13 @@ public class FeedbackForm {
 	 * in the form.
 	 */
 	public FeedbackForm(String url) {
-		this.url = url;
+		setUrl(url);
+		setDatasetInfo("");
+	}
+
+	public FeedbackForm(String url, String datasetInfo) {
+		setUrl(url);
+		setDatasetInfo(datasetInfo);
 	}
 
 	public void setUrl(String url) {
@@ -32,6 +40,14 @@ public class FeedbackForm {
 
 	public String getUrl() {
 		return url;
+	}
+
+	public String getDatasetInfo() {
+		return datasetInfo;
+	}
+
+	public void setDatasetInfo(String datasetInfo) {
+		this.datasetInfo = datasetInfo;
 	}
 
 }

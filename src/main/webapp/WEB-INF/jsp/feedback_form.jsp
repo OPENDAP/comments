@@ -62,6 +62,8 @@
             </p>
             <input type = "submit" value = "Submit" />
         </form>
+        <!-- h2>Dataset information</h2 -->
+        ${feedback_form_info.datasetInfo}
 
 	</div>
 	
