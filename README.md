@@ -1,6 +1,14 @@
 
 # Simple Spring Boot web application
 
+You need MongoDB. Get it using RPM or brew.
+
+Run mongodb like this:
+
+_mongod --dbpath /usr/local/mongo\_data/ --logpath /usr/local/var/mongo.log_
+
+(You need to make the log file beforehand)
+
 # Builds with maven
 use _./mvnw package_ to build
 
