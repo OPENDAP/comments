@@ -3,6 +3,9 @@ package org.opendap.feedback;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
@@ -24,15 +27,19 @@ public class FeedbackRepositoryTests {
     
 	private static final Logger log = LoggerFactory.getLogger(FeedbackRepositoryTests.class);
 
-    private String url1 = "http;//test.opendap.org/dap/data/nc/fnoc1.nc";
-    private String url2 = "http;//test.opendap.org/dap/data/nc/coads_climatology.nc";
+	// This user name is intended to not conflict with real names in a running mongo
+	// instance.
+	private final String user = "org.opendap.junit.test";
+
+	private String url1 = "http;//junit.test.opendap.org/dap/junit_test_data_17.txt";
+	private String url2 = "http;//junit.test.opendap.org/dap/data/junit_test_data_42.txt";
     
     @Before
     public void setUp() throws Exception {
-		this.repository.deleteAll();
+		// this.repository.deleteAll();
 
-		FeedbackData fdb1 = new FeedbackData(url1, "foo", "Comment1");
-		FeedbackData fdb2 = new FeedbackData(url2, "foo", "Comment2");
+		FeedbackData fdb1 = new FeedbackData(url1, user, "Comment1");
+		FeedbackData fdb2 = new FeedbackData(url2, user, "Comment2");
         //save product, verify has ID value after save
         assertNull(fdb1.getId());
         assertNull(fdb2.getId());//null before save
@@ -48,17 +55,14 @@ public class FeedbackRepositoryTests {
 
     @Test
     public void testFetchData(){
-        /*Test data retrieval*/
+		// Test data retrieval
 		FeedbackData fbd = repository.findFirstByUrl(url2);
         assertNotNull(fbd);
         assertEquals("Comment2", fbd.getComment());
-        /*Get all products, list should only have two*/
-        Iterable<FeedbackData> fdb_i = repository.findAll();
-        int count = 0;
-        for(FeedbackData p : fdb_i){
-            count++;
-        }
-        assertEquals(count, 2);
+
+		// Get all products, list should only have at least two
+		List<FeedbackData> fdb_i = repository.findAll();
+		assertTrue(fdb_i.size() >= 2);
     }
 
     @Test
@@ -74,8 +78,11 @@ public class FeedbackRepositoryTests {
     }
 
     @After
-    public void tearDown() throws Exception {
-      this.repository.deleteAll();
-    }
+	public void tearDown() throws Exception {
+		// Clean the collection of the test documents.
+		// but do not run deleteAll since that will remove all the documents
+		// from the collection.
+		repository.deleteAll(repository.findByUser(user));
+	}
 
 }
