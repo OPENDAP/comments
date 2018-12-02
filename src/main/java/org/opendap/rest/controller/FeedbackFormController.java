@@ -44,6 +44,16 @@ public class FeedbackFormController {
 		this.url = url;
 	}
 
+	/**
+	 * @brief Get content referenced by a URL
+	 * 
+	 *        The intent is to get HTML and return it in a String. The caller can do
+	 *        something like insert that into a larger HTML response.
+	 * 
+	 * @param url
+	 * @return
+	 * @throws Exception
+	 */
 	String getUrlText(String url) throws Exception {
 		URL website = new URL(url);
 		URLConnection connection = website.openConnection();
