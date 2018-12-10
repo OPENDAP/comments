@@ -6,12 +6,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
-//import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
-
 // This Spring boot annotation is == @Configuration, @EnableAutoConfiguration, and @ComponentScan
 // The scanBasePackages sets the component path, enabling the application to find its controller
 // classes.
-//@EnableOAuth2Sso
 @SpringBootApplication(scanBasePackages = {"org.opendap"})
 public class FeedbackApplication extends SpringBootServletInitializer {
 
