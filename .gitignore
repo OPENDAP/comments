@@ -8,3 +8,5 @@
 
 *.class
 /dump/
+
+.DS_Store
