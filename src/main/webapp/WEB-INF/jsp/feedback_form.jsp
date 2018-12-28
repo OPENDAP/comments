@@ -18,15 +18,21 @@
 </head>
 <body>
 
+<!-- BANNER -->
 <table width="100%"><tr>
 <td>
-User Feedback
-</td>
-<td>
-    <div style="align-self: right;">
-        <img  alt="OPeNDAP Logo" src="${logoImage}"/>
+    <div style="text-align: center;">
+        <a href="http://www.opendap.org"><img  alt="OPeNDAP Logo" src="${logoImage}"/></a>
     </div>
 </td>
+    <td>
+        <div class="medium" style="text-align: center;">Welcome to the <em>ESIP Dataset Feedback Form</em></div>
+        <div class="small" style="text-align: center;">
+            <span><a href="#">Home</a></span>
+            <span><a href="${CommentDumper}">DB-Dump</a></span>
+            <span><a href="#about">About</a></span>
+        </div>
+    </td>
 </tr></table>
 
 
@@ -35,14 +41,8 @@ User Feedback
 	<div class="container">
 
 		<div class="starter-template">
-            Welcome to DUF
-            <span class="small">(<a href="http://www.opendap.org">OPeNDAP Inc.</a>)</span>
-            <a href="#">Home</a>
-            <a href="${CommentDumper}">DB-Dump</a>
-            <a href="#about">About</a>
 
-            <h1>Dataset Feedback Form</h1>
-            <h2>URL: ${feedback_form_info.url}</h2>
+            <h2>Dataset URL: ${feedback_form_info.url}</h2>
 		</div>
 
         <form action="" method="post">
