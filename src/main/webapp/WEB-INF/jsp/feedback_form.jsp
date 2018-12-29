@@ -34,9 +34,10 @@
         </div>
     </td>
 </tr></table>
-
-
-<h2>Dataset URL: ${feedback_form_info.url}</h2>
+<h2>Welcome to the <em>ESIP Dataset Feedback Form</em></h2>
+<div class="medium">Here you can provide feedback about the dataset:</div>
+ <div class="large" style="margin-left: 10px;margin-top: 10px">${feedback_form_info.url}</div>
+<h2>Feedback Form</h2>
 
 
 	<div class="container">
@@ -69,12 +70,15 @@
     </div>
     <hr size="1" noshade="noshade"/>
 
-    <div>
-        Dataset information from the origin server:
-        <div style="margin-top: 5px;margin-left: 10%;width: 80%;border: 2px solid;">
-            ${feedback_form_info.datasetInfo}
-        </div>
-    </div>
+    <h3>DAP2 ".info" response for: ${feedback_form_info.url}</h3>
+    <!-- div style="margin-top: 5px;margin-left: 10%;width: 80%;border: 10px groove  rgba(82, 124, 193, 1.0);">
+        <div style="margin: 0px;border: 10px groove  rgba(82, 124, 193, .8);">
+            .
+        </div >
+    </div -->
+<div style="margin: 5px;border: 10px groove darkorange;border-radius: 25px;">
+    ${feedback_form_info.datasetInfo}
+</div>
 
 <hr size="1" noshade="noshade"/>
 <h3>OPeNDAP/ESIP Dataset Annotation System (@DUF_VERSION@)</h3>
