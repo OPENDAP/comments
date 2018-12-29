@@ -21,7 +21,7 @@
 <!-- BANNER -->
 <table width="100%"><tr>
 <td>
-    <div style="text-align: center;">
+    <div style="text-align: left;">
         <a href="http://www.opendap.org"><img  alt="OPeNDAP Logo" src="${logoImage}"/></a>
     </div>
 </td>
@@ -36,15 +36,10 @@
 </tr></table>
 
 
+<h2>Dataset URL: ${feedback_form_info.url}</h2>
 
 
 	<div class="container">
-
-		<div class="starter-template">
-
-            <h2>Dataset URL: ${feedback_form_info.url}</h2>
-		</div>
-
         <form action="" method="post">
         	<p>
 	        	<textarea style="font-family:courier;
@@ -71,12 +66,21 @@
             </p>
             <input type = "submit" value = "Submit" />
         </form>
-        <!-- h2>Dataset information</h2 -->
-        ${feedback_form_info.datasetInfo}
+    </div>
+    <hr size="1" noshade="noshade"/>
 
-	</div>
+    <div>
+        Dataset information from the origin server:
+        <div style="margin-top: 5px;margin-left: 10%;width: 80%;border: 2px solid;">
+            ${feedback_form_info.datasetInfo}
+        </div>
+    </div>
 
-	<script type="text/javascript" src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<hr size="1" noshade="noshade"/>
+<h3>OPeNDAP/ESIP Dataset Annotation System (@DUF_VERSION@)</h3>
+
+
+<script type="text/javascript" src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 </body>
 

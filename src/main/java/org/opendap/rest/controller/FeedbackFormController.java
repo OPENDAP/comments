@@ -85,7 +85,8 @@ public class FeedbackFormController {
 	@RequestMapping(value = "/feedback/form", method = RequestMethod.POST)
 	public ModelAndView addFeedbackData(@ModelAttribute("FeedbackData") FeedbackData feedbackData) {
 
-		log.debug("addFeedbackData; Saved URL: {}\n", getUrl());
+		log.debug("addFeedbackData; feedbackData.getUrl(): {}\n", feedbackData.getUrl());
+		log.debug("addFeedbackData; FeedbackFormController,getUrl: {}\n", feedbackData.getUrl());
 
 		feedbackData.setUrl(getUrl());
 
