@@ -86,7 +86,7 @@ public class FeedbackFormController {
 	public ModelAndView addFeedbackData(@ModelAttribute("FeedbackData") FeedbackData feedbackData) {
 
 		log.debug("addFeedbackData; feedbackData.getUrl(): {}\n", feedbackData.getUrl());
-		log.debug("addFeedbackData; FeedbackFormController,getUrl: {}\n", feedbackData.getUrl());
+		log.debug("addFeedbackData; FeedbackFormController,getUrl(): {}\n", getUrl());
 
 		feedbackData.setUrl(getUrl());
 

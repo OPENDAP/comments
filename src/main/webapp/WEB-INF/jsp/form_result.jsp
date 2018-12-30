@@ -35,7 +35,8 @@
 	</td>
 </tr></table>
 
-<h1>Dataset Feedback Submission</h1>
+<h1>Dataset Feedback Submission Summary</h1>
+Here is the summery of all of your comments for the dataset.
 <hr size="1" noshade="noshade"/>
 <table width="100%">
     <tr>
@@ -50,7 +51,7 @@
     </tr>
     <tr>
         <td style="text-align: right;vertical-align: top;"><span class="small_bold">comments:</span></td>
-        <td><span class="small"> ${form_info.comment}</span></td>
+        <td><pre>${form_info.comment}</pre></td>
     </tr>
 </table>
 <hr size="1" noshade="noshade"/>
