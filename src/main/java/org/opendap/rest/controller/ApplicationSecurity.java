@@ -1,4 +1,4 @@
-package org.opendap.feedback;
+package org.opendap.rest.controller;
 
 import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.context.annotation.Configuration;
@@ -14,7 +14,7 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
 		http
 	      .antMatcher("/**")
 	      .authorizeRequests()
-				.antMatchers("/", "/feedback/**", "/login**", "/webjars/**", "/error**")
+				.antMatchers("/", "/feedback/form**", "/feedback/database**", "/login**", "/webjars/**", "/error**")
 	        .permitAll()
 	      .anyRequest()
 	        .authenticated();

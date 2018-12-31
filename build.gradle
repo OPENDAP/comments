@@ -46,7 +46,7 @@ dependencies {
 
 	// While the other spring dependencies don't need versions, this one does. 
 	// Reason unknown. jhrg 12/30/18    
-    compile 'org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure:2.1.1.RELEASE'
+    compile group: 'org.springframework.security.oauth.boot', name: 'spring-security-oauth2-autoconfigure', version: '2.1.0.RELEASE'
     
     // See below where the logging is loaded 'manually' for more control. jhrg 12/30/18
     // compile group: 'org.springframework.boot', name: 'spring-boot-starter-log4j2'
