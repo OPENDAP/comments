@@ -5,7 +5,7 @@
 
 Run mongodb like this:
 
-_mongod --dbpath /usr/local/mongo\_data/ --logpath /usr/local/var/mongo.log_
+*mongod --dbpath /usr/local/mongo_data/ --logpath /usr/local/var/mongo.log*
 
 You need to make the log file beforehand and the _mongo\_data_ dir. Make sure 
 you (or the user that starts mongodb) can write to these.

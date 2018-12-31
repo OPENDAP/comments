@@ -16,6 +16,8 @@ import org.slf4j.LoggerFactory;
 //import org.opendap.feedback.FeedbackRepositoryCustom;
 //import org.opendap.feedback.FeedbackRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 // import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -63,6 +65,11 @@ public class FeedbackFormController {
 	@RequestMapping(value = "/feedback/form", method = RequestMethod.GET)
 	public ModelAndView feedbackForm(
 			@RequestParam(name = "url", required = false, defaultValue = "http://test.opendap.org/opendap/") String url) {
+
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+		log.debug("feedbackForm: auto principal: {}", auth.getPrincipal());
+
 		setUrl(url);	// Save for later
 
 		// Get the info response for the dataset. This shows that the form can be
@@ -85,6 +92,9 @@ public class FeedbackFormController {
 	@RequestMapping(value = "/feedback/form", method = RequestMethod.POST)
 	public ModelAndView addFeedbackData(@ModelAttribute("FeedbackData") FeedbackData feedbackData) {
 
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+		log.debug("addFeedbackData; authentication details: {}\n", auth.getDetails());
 		log.debug("addFeedbackData; Saved URL: {}\n", getUrl());
 
 		feedbackData.setUrl(getUrl());
