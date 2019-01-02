@@ -23,9 +23,7 @@
     <spring:url value="/css/contents.css" var="springCss" />
     <!-- spring:url value="/css/treeView.css" var="treeViewCss" / -->
     <spring:url value="/images/logo.png" var="logoImage" />
-
-
-    <spring:url value="/database" var="CommentDumper" />
+    <spring:url value="/feedback/database" var="DatabaseInspection" />
 
 	<link href="${springCss}" rel="stylesheet" />
 
@@ -47,8 +45,7 @@
         <div class="medium" style="margin-top: 15px;text-align: center;">Welcome to the <em>ESIP Dataset Feedback Form</em></div>
         <div class="small" style="margin-top: 5px;text-align: center;">
             <span><a href="/">Home</a></span>
-            <!-- @FIXME This should use the spring:url CommentDumper but that is broken -->
-            <span><a href="/feedback/database">DB-Dump</a></span>
+            <span><a href="${DatabaseInspection}">DB-Dump</a></span>
             <span><a href="/about">About</a></span>
         </div>
     </td>

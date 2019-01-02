@@ -34,6 +34,7 @@
     <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
     <spring:url value="/images/logo.png" var="logoImage" />
     <spring:url value="/css/contents.css" var="springCss" />
+    <spring:url value="/feedback/database" var="DatabaseInspection" />
 
     <link href="${springCss}" rel="stylesheet" />
 
@@ -57,7 +58,7 @@
         <div class="small" style="margin-top: 15px;text-align: center;">Welcome to the <em>ESIP Dataset Feedback</em> Error Page</div>
         <div class="small" style="margin-top: 5px;text-align: center;">
             <span><a href="/">Home</a></span>
-            <span><a href="/feedback/database">DB-Dump</a></span>
+            <span><a href="${DatabaseInspection}">DB-Dump</a></span>
             <span><a href="/about">About</a></span>
         </div>
     </td>
