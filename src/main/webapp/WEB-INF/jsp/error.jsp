@@ -59,10 +59,10 @@
         <div class="xxlarge" style="margin-top: 0px;text-align: center">${status} - ${error}</div>
         <div class="small" style="margin-top: 15px;text-align: center;">Welcome to the <em>ESIP Dataset Feedback</em> Error Page</div>
         <div class="small" style="margin-top: 5px;text-align: center;">
-            <span><a href="#">Home</a></span>
+            <span><a href="/">Home</a></span>
             <!-- @FIXME This should use the spring:url CommentDumper but that is broken -->
             <span><a href="/feedback/database">DB-Dump</a></span>
-            <span><a href="#about">About</a></span>
+            <span><a href="/about">About</a></span>
         </div>
     </td>
 </tr></table>

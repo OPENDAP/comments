@@ -27,11 +27,12 @@
 		<div class="medium" style="text-align: left;">Your feedback has been submitted.</div>
 		<div class="medium" style="text-align: left;">Thank You!</div>
 
-		<div class="small" style="text-align: left;margin-top: 5px;">
-			<span><a href="#">Home</a></span>
-			<span><a href="${CommentDumper}">DB-Dump</a></span>
-			<span><a href="#about">About</a></span>
-		</div>
+        <div class="small" style="margin-top: 5px;text-align: center;">
+            <span><a href="/">Home</a></span>
+            <!-- @FIXME This should use the spring:url CommentDumper but that is broken -->
+            <span><a href="/feedback/database">DB-Dump</a></span>
+            <span><a href="/about">About</a></span>
+        </div>
 	</td>
 </tr></table>
 
