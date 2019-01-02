@@ -41,7 +41,6 @@
     <title>Hyrax: OUCH!</title>
 </head>
 <body>
-<div class=small style="border-width: 1px;border-color: black">logoImage: ${logoImage}; springCss: ${springCss}</div>
 
 <table width="100%"><tr>
     <td>
