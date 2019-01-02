@@ -55,8 +55,9 @@
         <div style='float: right;vertical-align:top;font-size: x-small;'>
             uid: <b><%=userId%></b>
         </div>
-        <div class="small" style="margin-top: 15px;text-align: center;">Welcome to the <em>ESIP Dataset Feedback</em></div>
-        <div class="xxlarge" style="margin-top: 5px;text-align: center"> Error Page</div>
+        <div class="xxlarge" style="margin-top: 0px;text-align: center">ERROR</div>
+        <div class="xxlarge" style="margin-top: 0px;text-align: center">${status} - ${error}</div>
+        <div class="small" style="margin-top: 15px;text-align: center;">Welcome to the <em>ESIP Dataset Feedback</em> Error Page</div>
         <div class="small" style="margin-top: 5px;text-align: center;">
             <span><a href="#">Home</a></span>
             <!-- @FIXME This should use the spring:url CommentDumper but that is broken -->
@@ -66,7 +67,7 @@
     </td>
 </tr></table>
 
-<h2>It seems that your request has been beset by daemons... <span class="medium" style="float: right;">http status: ${status}</span></h2>
+<h2>It seems that your request has been beset by daemons...</h2>
 <hr size="1" noshade="noshade"/>
 
 <div style="border-color: black;border-width: 1px">
