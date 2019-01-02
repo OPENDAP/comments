@@ -29,7 +29,6 @@
 
 </head>
 <body>
-<div class=small style="border-width: 1px;border-color: black">logoImage: ${logoImage}; springCss: ${springCss}</div>
 
 <!-- BANNER -->
 <table width="100%"><tr>
