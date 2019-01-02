@@ -62,7 +62,7 @@ public class FeedbackFormController {
 
 	@RequestMapping(value = "/feedback/form", method = RequestMethod.GET)
 	public ModelAndView feedbackForm(
-			@RequestParam(name = "url", required = false, defaultValue = "http://test.opendap.org/opendap/") String url) {
+			@RequestParam(name = "url", required = false, defaultValue = "http://test.opendap.org/opendap/data/nc/coads_climatology.nc") String url) {
 		setUrl(url);	// Save for later
 
 		// Get the info response for the dataset. This shows that the form can be
@@ -85,7 +85,8 @@ public class FeedbackFormController {
 	@RequestMapping(value = "/feedback/form", method = RequestMethod.POST)
 	public ModelAndView addFeedbackData(@ModelAttribute("FeedbackData") FeedbackData feedbackData) {
 
-		log.debug("addFeedbackData; Saved URL: {}\n", getUrl());
+		log.debug("addFeedbackData; feedbackData.getUrl(): {}\n", feedbackData.getUrl());
+		log.debug("addFeedbackData; FeedbackFormController,getUrl(): {}\n", getUrl());
 
 		feedbackData.setUrl(getUrl());
 

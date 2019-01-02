@@ -15,6 +15,7 @@ plugins {
 	id 'java'
 	id 'war'
 	id 'eclipse'
+    id 'idea'
 
 	// See https://docs.spring.io/spring-boot/docs/current/gradle-plugin/reference/html/
 	// for information about features of the org.springframework.boot plugin.
