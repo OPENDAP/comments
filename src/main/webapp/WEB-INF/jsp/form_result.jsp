@@ -58,8 +58,6 @@ Here is the summery of all of your comments for the dataset.
 <hr size="1" noshade="noshade"/>
 <h3>OPeNDAP/ESIP Dataset Annotation System (@DUF_VERSION@)</h3>
 
-
-
 <script type="text/javascript" src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 </body>
