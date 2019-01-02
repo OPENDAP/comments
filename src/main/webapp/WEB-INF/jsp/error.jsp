@@ -70,8 +70,16 @@
 <h2>It seems that your request has been beset by daemons...</h2>
 <hr size="1" noshade="noshade"/>
 
+<c:if test="${message!=''}">
+    <div class="small_bold">The specific message associated with this error is: </div>
+    <div class="medium" style="margin-top: 3px;margin-left: 20px;margin-right: 20px"><pre>${message}</pre></div>
+</c:if>
+
+<hr size="1" noshade="noshade"/>
+
 <div style="border-color: black;border-width: 1px">
-    <div class="medium_bold" style="text-align: left">Request Information</div>
+    <h2>Request Information</h2>
+    <hr size="1" noshade="noshade"/>
     <table class="small" style="width: 100%;">
         <tr>
             <td style=" text-align: right; font-weight: bold;">contextPath - </td>
@@ -106,7 +114,8 @@
 <hr size="1" noshade="noshade"/>
 
 <div style="border-color: black;border-width: 1px">
-    <div class="medium_bold"  style="text-align: left">Error Information</div>
+    <h2>Error Information</h2>
+    <hr size="1" noshade="noshade"/>
     <table class="small" style="width: 100%;">
         <tr>
             <td style=" text-align: right; font-weight: bold;">Date - </td>
