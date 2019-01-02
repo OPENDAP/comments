@@ -36,6 +36,9 @@
 
     <!-- @FIXME This should use the spring:url springCss but that is broken -->
     <link href="/css/contents.css" rel="stylesheet" />
+
+    <spring:url value="/database" var="CommentDumper" />
+
     <title>Hyrax: OUCH!</title>
 </head>
 <body>
@@ -56,7 +59,8 @@
         <div class="xxlarge" style="margin-top: 5px;text-align: center"> Error Page</div>
         <div class="small" style="margin-top: 5px;text-align: center;">
             <span><a href="#">Home</a></span>
-            <span><a href="${CommentDumper}">DB-Dump</a></span>
+            <!-- @FIXME This should use the spring:url CommentDumper but that is broken -->
+            <span><a href="/feedback/database">DB-Dump</a></span>
             <span><a href="#about">About</a></span>
         </div>
     </td>
