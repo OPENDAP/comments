@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ page import="org.opendap.servlet.ReqInfo" %>
 <%@ page import="java.security.Principal" %>
@@ -34,10 +35,7 @@
     <spring:url value="/images/logo.png" var="logoImage" />
     <spring:url value="/css/contents.css" var="springCss" />
 
-    <!-- @FIXME This should use the spring:url springCss but that is broken -->
-    <link href="/css/contents.css" rel="stylesheet" />
-
-    <spring:url value="/database" var="CommentDumper" />
+    <link href="${springCss}" rel="stylesheet" />
 
     <title>Hyrax: OUCH!</title>
 </head>
@@ -47,8 +45,7 @@
 <table width="100%"><tr>
     <td>
         <div style="text-align: left;">
-            <!-- @FIXME This should use the spring:url logoImage but that is broken -->
-            <a href="http://www.opendap.org"><img  alt="OPeNDAP Logo" src="/images/logo.png"/></a>
+            <a href="http://www.opendap.org"><img  alt="OPeNDAP Logo" src="${logoImage}"/></a>
         </div>
     </td>
     <td>
@@ -60,7 +57,6 @@
         <div class="small" style="margin-top: 15px;text-align: center;">Welcome to the <em>ESIP Dataset Feedback</em> Error Page</div>
         <div class="small" style="margin-top: 5px;text-align: center;">
             <span><a href="/">Home</a></span>
-            <!-- @FIXME This should use the spring:url CommentDumper but that is broken -->
             <span><a href="/feedback/database">DB-Dump</a></span>
             <span><a href="/about">About</a></span>
         </div>
