@@ -52,8 +52,9 @@
         <div style='float: right;vertical-align:top;font-size: x-small;'>
             uid: <b><%=userId%></b>
         </div>
-        <div class="medium" style="margin-top: 15px;text-align: center;">Welcome to the <em>ESIP Dataset Feedback Error Page</em></div>
-        <div class="small" style="text-align: center;">
+        <div class="small" style="margin-top: 15px;text-align: center;">Welcome to the <em>ESIP Dataset Feedback</em></div>
+        <div class="xxlarge" style="margin-top: 5px;text-align: center"> Error Page</div>
+        <div class="small" style="margin-top: 5px;text-align: center;">
             <span><a href="#">Home</a></span>
             <span><a href="${CommentDumper}">DB-Dump</a></span>
             <span><a href="#about">About</a></span>
@@ -61,7 +62,7 @@
     </td>
 </tr></table>
 
-<h2>It seems that your request has been beset by daemons.</h2>
+<h2>It seems that your request has been beset by daemons... <span class="medium" style="float: right;">http status: ${status}</span></h2>
 <hr size="1" noshade="noshade"/>
 
 <div style="border-color: black;border-width: 1px">

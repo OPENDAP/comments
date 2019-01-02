@@ -53,6 +53,10 @@
         </div>
     </td>
 </tr></table>
+
+
+<!-- Main Page Body -->
+
 <h2>Welcome to the <em>ESIP Dataset Feedback Form</em></h2>
 <div class="medium">Here you can provide feedback about the dataset:</div>
  <div class="large" style="margin-left: 10px;margin-top: 10px">${feedback_form_info.url}</div>
