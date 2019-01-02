@@ -87,7 +87,7 @@ public class FeedbackFormController {
 
 	@RequestMapping(value = "/feedback/form", method = RequestMethod.GET)
 	public ModelAndView feedbackForm(
-			@RequestParam(name = "url", required = false, defaultValue = "http://test.opendap.org/opendap/data/nc/fnoc1.nc") String url) {
+			@RequestParam(name = "url", required = false, defaultValue = "http://test.opendap.org/opendap/data/nc/coads_climatology.nc") String url) {
 
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
@@ -118,7 +118,8 @@ public class FeedbackFormController {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
 		log.debug("addFeedbackData; authentication details: {}\n", auth.getDetails());
-		log.debug("addFeedbackData; Saved URL: {}\n", getUrl());
+		log.debug("addFeedbackData; feedbackData.getUrl(): {}\n", feedbackData.getUrl());
+		log.debug("addFeedbackData; FeedbackFormController, getUrl(): {}\n", getUrl());
 
 		feedbackData.setUrl(getUrl());
 
