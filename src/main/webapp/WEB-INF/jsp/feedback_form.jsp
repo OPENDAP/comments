@@ -17,7 +17,7 @@
 <head>
 
 	<!-- Access the bootstrap CSS like this, 
-		Spring boot will handle the resource mapping automcatically -->
+		Spring boot will handle the resource mapping automatically -->
 	<link rel="stylesheet" type="text/css" href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
 
     <spring:url value="/css/contents.css" var="springCss" />
