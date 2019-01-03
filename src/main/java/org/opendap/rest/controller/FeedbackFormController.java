@@ -46,28 +46,6 @@ public class FeedbackFormController {
 		this.url = url;
 	}
 
-	/** 
-	 * Return the index page, which has one link that returns the /login page. That page
-	 * does not actually exist, but given the configuration in ApplicationSecurity, will
-	 * be subject o OAuth2 authentication. That will authentication will redirect back to 
-	 * the /feedback/form URL.
-	 * 
-	 * @return A string that matches the index jsp page.
-	 */
-	@RequestMapping("/")
-	public String login() {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		log.debug("feedbackForm: login(/): {}", auth.getPrincipal());
-		return "/index";
-	}
-
-	@RequestMapping("/callback")
-	public String callback() {
-		System.out.println("redirecting to home page");
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		System.out.println(auth.getDetails());
-		return "/home";
-	}
 
 	String getUrlText(String url) throws Exception {
 		URL website = new URL(url);
@@ -119,7 +97,9 @@ public class FeedbackFormController {
 
 		log.debug("addFeedbackData; authentication details: {}\n", auth.getDetails());
 		log.debug("addFeedbackData; feedbackData.getUrl(): {}\n", feedbackData.getUrl());
-		log.debug("addFeedbackData; FeedbackFormController, getUrl(): {}\n", getUrl());
+
+		log.debug("addFeedbackData; FeedbackFormController.getUrl(): {}\n", getUrl());
+
 
 		feedbackData.setUrl(getUrl());
 

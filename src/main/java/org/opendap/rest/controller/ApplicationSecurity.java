@@ -12,9 +12,9 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
 	@Override
     protected void configure(HttpSecurity http) throws Exception {
 		http
-	      .antMatcher("/**")
+	      .antMatcher("/feedback/**")
 	      .authorizeRequests()
-				.antMatchers("/", "/feedback/form**", "/feedback/database**", "/login**", "/webjars/**", "/error**")
+				.antMatchers("/feedback/form**", "/feedback/database**", "/login**", "/webjars/**", "/error**")
 	        .permitAll()
 	      .anyRequest()
 	        .authenticated();
