@@ -76,7 +76,7 @@ public class FeedbackFormController {
             if(auth !=null)
                 principle  = (java.security.Principal) auth.getPrincipal();
         }
-        log.debug("feedbackForm: user: {}", principle);
+        log.debug("feedbackForm() user: {}", principle);
 
 		setUrl(url);	// Save for later
 

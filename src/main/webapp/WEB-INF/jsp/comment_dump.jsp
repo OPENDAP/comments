@@ -1,16 +1,10 @@
 <%@ page import="java.security.Principal" %>
+<%@ page import="org.opendap.servlet.ReqInfo" %>
 <!DOCTYPE html>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
-	String userId = null;
-	Principal userPrinciple = request.getUserPrincipal();
-	if (request.getRemoteUser() != null) {
-		userId = request.getRemoteUser();
-
-	} else if (userPrinciple != null) {
-		userId = userPrinciple.getName();
-	}
+    String userId = ReqInfo.getUserId(request);
 
 %>
 <html lang="en">
@@ -39,9 +33,13 @@
 		</div>
 	</td>
 	<td>
-		<div style='float: right;vertical-align:top;font-size: x-small;'>
-			uid: <b><%=userId%></b>
-		</div>
+        <div style='float: right;vertical-align:top;font-size: x-small;'>
+            <% if(userId==null || userId.length()==0){ %>
+            <a href="/login"><b>login</b></a>
+            <% } else { %>
+            <a href="/profile"><b><%=userId%></b></a>
+            <% } %>
+        </div>
 		<div class="medium" style="margin-top: 15px;text-align: center;">Welcome to the <em>ESIP Dataset Feedback Database Dumper</em></div>
         <div class="small" style="margin-top: 5px;text-align: center;">
             <span><a href="/">Home</a></span>

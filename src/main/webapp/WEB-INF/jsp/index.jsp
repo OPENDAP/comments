@@ -7,14 +7,7 @@
 <%@page session="false" %>
 
 <%
-    String userId = null;
-    Principal userPrinciple = request.getUserPrincipal();
-    if (request.getRemoteUser() != null) {
-        userId = request.getRemoteUser();
-
-    } else if (userPrinciple != null) {
-        userId = userPrinciple.getName();
-    }
+    String userId = ReqInfo.getUserId(request);
     /*
     String contextPath = request.getContextPath();
     String serviceUrl = ReqInfo.getServiceUrl(request);
@@ -54,12 +47,10 @@
     <td>
         <div style='float: right;vertical-align:top;font-size: x-small;'>
             <% if(userId==null || userId.length()==0){ %>
-            <a href="/login"><b>login</b></a>
-
+                <a href="/login"><b>login</b></a>
             <% } else { %>
-            <a href="/profile"><b><%=userId%></b></a>
+                <a href="/profile"><b><%=userId%></b></a>
             <% } %>
-
         </div>
         <div class="medium" style="margin-top: 15px;text-align: center;">Welcome to the <em>ESIP Dataset Feedback</em> System</div>
         <div class="small" style="margin-top: 5px;text-align: center;">

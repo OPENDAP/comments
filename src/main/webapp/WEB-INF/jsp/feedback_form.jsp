@@ -1,17 +1,10 @@
 <%@ page import="java.security.Principal" %>
+<%@ page import="org.opendap.servlet.ReqInfo" %>
 <!DOCTYPE html>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
-    String userId = null;
-    Principal userPrinciple = request.getUserPrincipal();
-    if (request.getRemoteUser() != null) {
-        userId = request.getRemoteUser();
-
-    } else if (userPrinciple != null) {
-        userId = userPrinciple.getName();
-    }
-
+    String userId = ReqInfo.getUserId(request);
 %>
 <html lang="en">
 <head>
@@ -39,7 +32,11 @@
 </td>
     <td>
         <div style='float: right;vertical-align:top;font-size: x-small;'>
-            uid: <b><%=userId%></b>
+            <% if(userId==null || userId.length()==0){ %>
+            <a href="/login"><b>login</b></a>
+            <% } else { %>
+            <a href="/profile"><b><%=userId%></b></a>
+            <% } %>
         </div>
         <div class="medium" style="margin-top: 15px;text-align: center;">Welcome to the <em>ESIP Dataset Feedback Form</em></div>
         <div class="small" style="margin-top: 5px;text-align: center;">
@@ -60,17 +57,20 @@
 
 
 	<div class="container">
+        Your comment will be attributed to: <%=userId%>
+
         <form action="" method="post">
         	<p>
 	        	<textarea style="font-family:courier;
 	            	margin-left: 5px;
 	                margin-right: 5px;
 	                max-width: 50%;
-                    background: rgba(82, 124, 193, 0.03);"
+                    background: rgba(82, 124, 193, 0.03);
+                    resize: horizontal;"
 	                id="user"
 	                name="user"
 	                rows="1"
-	                cols="80">Username</textarea>
+                    readonly><%=userId%></textarea>
         	</p>
             <p>
             	<textarea style="font-family:courier;

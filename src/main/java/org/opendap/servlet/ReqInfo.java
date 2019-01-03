@@ -31,6 +31,7 @@ import org.slf4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.security.Principal;
 import java.util.Enumeration;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -118,6 +119,18 @@ public class ReqInfo {
         return serviceUrl;
     }
 
+
+    public static String getUserId(HttpServletRequest request){
+        String userId = null;
+        Principal userPrinciple = request.getUserPrincipal();
+        if (request.getRemoteUser() != null) {
+            userId = request.getRemoteUser();
+
+        } else if (userPrinciple != null) {
+            userId = userPrinciple.getName();
+        }
+        return userId;
+    }
 
 }                                                          
 
