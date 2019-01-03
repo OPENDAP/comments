@@ -72,10 +72,8 @@
 
 <h2>Dataset Feedback</h2>
 <hr size="1" noshade="noshade"/>
-<div><a href="/login">Login with Google</a></div>
-<hr size="1" noshade="noshade"/>
-<div>We've got a lot of stuff to say about all this noise...</div>
-<div>Let's put it here, shall we?</div>
+<div class="small">We've got a lot of stuff to say about all this noise...</div>
+<div class="small">Let's put it here, shall we?</div>
 <div style="margin-top: 10px;"><a href="/feedback/form">Find the Dataset Feedback Form here.</a></div>
 <hr size="1" noshade="noshade"/>
 <h3>OPeNDAP/ESIP Dataset Annotation System (@DUF_VERSION@)</h3>
