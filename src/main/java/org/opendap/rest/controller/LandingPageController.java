@@ -42,21 +42,19 @@ public class LandingPageController {
             if(auth !=null)
                 principle  = (java.security.Principal) auth.getPrincipal();
         }
-        log.debug("feedbackForm: user: {}", principle);
+        log.debug("landingPage: user: {}", principle);
         return "/login";
     }
 
     @RequestMapping("/callback")
     public String callback() {
         log.debug("redirecting to home page");
-        Principal principle = null;
         SecurityContext sc = SecurityContextHolder.getContext();
         if(sc!=null) {
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             if (auth != null) {
                 log.debug((auth.getDetails().toString()));
             }
-
         }
         return "/index";
     }

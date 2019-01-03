@@ -7,6 +7,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.security.Principal;
 
 import org.opendap.beans.FeedbackData;
 import org.opendap.beans.FeedbackForm;
@@ -17,6 +18,7 @@ import org.slf4j.LoggerFactory;
 //import org.opendap.feedback.FeedbackRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 // import org.springframework.ui.ModelMap;
@@ -67,9 +69,14 @@ public class FeedbackFormController {
 	public ModelAndView feedbackForm(
 			@RequestParam(name = "url", required = false, defaultValue = "http://test.opendap.org/opendap/data/nc/coads_climatology.nc") String url) {
 
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
-		log.debug("feedbackForm: auth principal: {}", auth.getDetails());
+        Principal principle = null;
+        SecurityContext sc = SecurityContextHolder.getContext();
+        if(sc!=null) {
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            if(auth !=null)
+                principle  = (java.security.Principal) auth.getPrincipal();
+        }
+        log.debug("feedbackForm: user: {}", principle);
 
 		setUrl(url);	// Save for later
 
@@ -93,12 +100,19 @@ public class FeedbackFormController {
 	@RequestMapping(value = "/feedback/form", method = RequestMethod.POST)
 	public ModelAndView addFeedbackData(@ModelAttribute("FeedbackData") FeedbackData feedbackData) {
 
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        SecurityContext sc = SecurityContextHolder.getContext();
+        if(sc!=null) {
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            if (auth != null) {
+                log.debug((auth.getDetails().toString()));
+            }
+            else {
+                log.debug("addFeedbackData() - USER IS NOT AUTHENTICATED.");
+            }
+        }
+		log.debug("addFeedbackData() - feedbackData.getUrl(): {}\n", feedbackData.getUrl());
 
-		log.debug("addFeedbackData; authentication details: {}\n", auth.getDetails());
-		log.debug("addFeedbackData; feedbackData.getUrl(): {}\n", feedbackData.getUrl());
-
-		log.debug("addFeedbackData; FeedbackFormController.getUrl(): {}\n", getUrl());
+		log.debug("addFeedbackData() - FeedbackFormController.getUrl(): {}\n", getUrl());
 
 
 		feedbackData.setUrl(getUrl());
