@@ -45,14 +45,15 @@
         </div>
     </td>
     <td>
-        <div style='float: right;vertical-align:top;font-size: x-small;'>
+        <div style='float: right;vertical-align:top;text-align: right;font-size: x-small;'>
             <% if(userId==null || userId.length()==0){ %>
                 <a href="/login"><b>login</b></a>
             <% } else { %>
-                <a href="/profile"><b><%=userId%></b></a>
+            <div><a href="/profile"><%=userId%></a></div>
+            <div style="margin-top: 2px"><a href="/logout">logout</a></div>
             <% } %>
         </div>
-        <div class="medium" style="margin-top: 15px;text-align: center;">Welcome to the <em>ESIP Dataset Feedback</em> System</div>
+        <div class="medium" style="margin-top: 25px;text-align: center;"><em>Welcome to the ESIP Dataset Feedback System</em> </div>
         <div class="small" style="margin-top: 5px;text-align: center;">
             <span><a href="${home}">Home</a></span>
             <span><a href="${DatabaseInspection}">DB-Dump</a></span>

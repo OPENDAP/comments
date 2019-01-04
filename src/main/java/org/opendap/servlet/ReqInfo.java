@@ -28,48 +28,16 @@
 package org.opendap.servlet;
 
 import org.slf4j.Logger;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.security.Principal;
-import java.util.Enumeration;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 
 /**
- * Provides utility methods that perform "analysis" of the user request and return important componet strings
- * for the OPeNDAP servlet.
- *
- * The dataSourceName is the local URL path of the request, minus any requestSuffixRegex detected. So, if the request is
- * for a dataset (an atom) then the dataSourceName is the local path and the name of the dataset minus the
- * requestSuffixRegex. If the request is for a collection, then the dataSourceName is the complete local path.
- * <p><b>Examples:</b>
- * <ul><li>If the complete URL were: http://opendap.org:8080/opendap/nc/fnoc1.nc.dds?lat,lon,time&lat>72.0<br/>
- * Then the:</li>
- * <ul>
- * <li> RequestURL = http://opendap.org:8080/opendap/nc/fnoc1.nc </li>
- * <li> CollectionName = /opendap/nc/ </li>
- * <li> DataSetName = fnoc1.nc </li>
- * <li> DataSourceName = /opendap/nc/fnoc1.nc </li>
- * <li> RequestSuffix = dds </li>
- * <li> ConstraintExpression = lat,lon,time&lat>72.0 </li>
- * </ul>
- *
- * <li>If the complete URL were: http://opendap.org:8080/opendap/nc/<br/>
- * Then the:</li>
- * <ul>
- * <li> RequestURL = http://opendap.org:8080/opendap/nc/ </li>
- * <li> CollectionName = /opendap/nc/ </li>
- * <li> DataSetName = null </li>
- * <li> DataSourceName = /opendap/nc/ </li>
- * <li> RequestSuffix = "" </li>
- * <li> ConstraintExpression = "" </li>
- * </ul>
- * </ul>
+ * Provides utility methods that perform "analysis" of the user request and return important component strings
+ * for the servlet.
  * @author Nathan Potter
  */
 
@@ -120,18 +88,44 @@ public class ReqInfo {
     }
 
 
+    /**
+     * Deterimine the user id of the user associated with the currently porcessed request.
+     * Some code (SpringBoot @Controllers for example) may not have an instance of HttpServletRequest
+     * to pass in so that section will not run (and doesn't need to?)
+     * @param request
+     * @return
+     */
     public static String getUserId(HttpServletRequest request){
         String userId = null;
-        Principal userPrinciple = request.getUserPrincipal();
-        if (request.getRemoteUser() != null) {
-            userId = request.getRemoteUser();
+        SecurityContext sc = SecurityContextHolder.getContext();
+        if(sc!=null) {
+            log.debug("getUserId() - Located SpringBoot SecurityContext: <{}>",sc);
+            Authentication auth = sc.getAuthentication();
+            if (auth != null) {
+                log.debug("getUserId() - Located SpringBoot Authentication: <{}>",auth);
+                log.debug((auth.getDetails().toString()));
+                userId = auth.getPrincipal().toString();
+            }
+            else {
+                log.debug("getUserId() - SecurityContext.getAuthentication() returned null. Unable to retrieve SpringBoot Authentication.");
+            }
+        }
+        if(userId==null && request!=null){
+            log.debug("getUserId() - Checking Tomcat API.");
+            Principal userPrinciple = request.getUserPrincipal();
+            if (request.getRemoteUser() != null) {
+                userId = request.getRemoteUser();
+                log.debug("getUserId() - request.getRemoteUser(): {}",userId);
 
-        } else if (userPrinciple != null) {
-            userId = userPrinciple.getName();
+            } else if (userPrinciple != null) {
+                userId = userPrinciple.getName();
+                log.debug("getUserId() - userPrinciple.getName(): {}",userId);
+            }
+            if(userId==null)
+                log.debug("getUserId() - Tomcat API shows no active user.");
         }
         return userId;
     }
-
 }                                                          
 
 

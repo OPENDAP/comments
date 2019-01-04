@@ -104,16 +104,14 @@ public class FeedbackFormController {
         if(sc!=null) {
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             if (auth != null) {
-                log.debug((auth.getDetails().toString()));
+                log.debug("addFeedbackData() - {}",auth.getDetails().toString());
             }
             else {
                 log.debug("addFeedbackData() - USER IS NOT AUTHENTICATED.");
             }
         }
 		log.debug("addFeedbackData() - feedbackData.getUrl(): {}\n", feedbackData.getUrl());
-
 		log.debug("addFeedbackData() - FeedbackFormController.getUrl(): {}\n", getUrl());
-
 
 		feedbackData.setUrl(getUrl());
 
