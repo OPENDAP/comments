@@ -1,5 +1,5 @@
 <%@ page import="java.security.Principal" %>
-<%@ page import="org.opendap.servlet.ReqInfo" %>
+<%@ page import="org.opendap.utils.ReqInfo" %>
 <!DOCTYPE html>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>

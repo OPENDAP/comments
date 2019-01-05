@@ -25,7 +25,7 @@
  */
 
 
-package org.opendap.servlet;
+package org.opendap.utils;
 
 import org.slf4j.Logger;
 import org.springframework.security.core.Authentication;
