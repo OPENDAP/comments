@@ -56,7 +56,13 @@ dependencies {
     // the exclude configuration below, which is needed. jhrg 11/6/18
     compile group: 'org.slf4j', name:'slf4j-api'
     compile group: 'org.slf4j', name:'slf4j-simple'
-    
+
+    // Saxon XSLT
+    // compile group: 'net.sf.saxon', name:'saxon-he'
+
+    compile group: 'net.sf.saxon', name:'Saxon-HE'
+
+
     // A slightly less simple slf4j impl that still uses a properties file. jhrg 11/7/18
     // compile group: 'org.slf4j', name:'slf4j-log4j12'
     
@@ -66,6 +72,7 @@ dependencies {
     // as 'provided at runtime' does not break the 'bootRun' target.
     providedRuntime group: 'org.springframework.boot', name: 'spring-boot-starter-tomcat'
     providedRuntime group: 'org.apache.tomcat.embed', name: 'tomcat-embed-jasper'
+
 }
 
 configurations {
