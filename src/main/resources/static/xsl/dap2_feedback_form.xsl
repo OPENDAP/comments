@@ -46,7 +46,7 @@
         <xsl:call-template name="copyright"/>
         <xhtml>
             <head>
-                <link rel="stylesheet" href="{$docsService}/css/collapse.css" type="text/css"/>
+                <!-- link rel="stylesheet" href="{$docsService}/css/collapse.css" type="text/css"/ -->
                 <link rel="stylesheet" href="{$docsService}/css/contents.css" type="text/css"/>
                 <link rel="stylesheet" href="{$docsService}/css/treeView.css" type="text/css"/>
 
@@ -63,7 +63,7 @@
 
                 <xsl:element name="script">
                     <xsl:attribute name="type">text/javascript</xsl:attribute>
-                    <xsl:attribute name="src"><xsl:value-of select="$serviceContext"/>/js/dap2_buttons.js</xsl:attribute>
+                    <xsl:attribute name="src"><xsl:value-of select="$serviceContext"/>/js/feedback_buttons.js</xsl:attribute>
                     <xsl:value-of select="' '"/>
                 </xsl:element>
 
@@ -118,10 +118,7 @@
                         </td>
                         <td>
                             <div class="small_italic" style="padding-bottom: 5px;">Welcome to the new (<em>beta</em>) </div>
-                            <div class="large" style="padding-bottom: 5px;">OPeNDAP Data Access Form</div>
-                            <div class="small_italic" style="padding-bottom: 5px;">
-                                <a href="{$datasetUrl}.html_old">The old form can be found here...</a>
-                            </div>
+                            <div class="large" style="padding-bottom: 5px;">Feedback Form</div>
                         </td>
                     </tr>
                 </table>
@@ -139,7 +136,7 @@
                 <!--                       PAGE BODY                        -->
                 <!--                                                        -->
                 <!--                                                        -->
-                <form action="">
+                <form  action="" method="post">
 
                     <table width="100%" border="0">
                         <xsl:call-template name="dataRequestButtonsRow"/>
@@ -152,6 +149,7 @@
                         <xsl:call-template name="VariablesRow"/>
 
                     </table>
+                    <input type = "submit" value = "Submit" />
 
                     <!-- ****************************************************** -->
                     <!--                              FOOTER                    -->
@@ -368,7 +366,6 @@
                 DAP2_URL.add_dap_var(<xsl:value-of select="$myJSVarName"/>);
             </xsl:if>
 
-            <xsl:value-of select="$myJSVarName"/>.checkBox = "<xsl:value-of select="$checkBoxName"/>";
             <xsl:if test="$parentContainer">
                 <xsl:value-of select="$parentContainer"/>.addChildVar(<xsl:value-of select="$myJSVarName"/>);
                 <xsl:value-of select="$myJSVarName"/>.parentContainer = <xsl:value-of select="$parentContainer"/>;
@@ -376,126 +373,19 @@
         </xsl:element>
 
         <div style="color: black;margin-left:-20px;margin-top:10px">
-            <input type="checkbox" id="{$checkBoxName}"
-                   onclick="{$myJSVarName}.handle_projection_change({$checkBoxName})" onfocus="describe_projection()"/>
             <xsl:value-of select="@name"/>
 
-            <!--span class="small">
-                <xsl:if test="$container">
-                    (child of <xsl:value-of select="$container"/>)
-                </xsl:if>
-            </span-->
-            <xsl:call-template name="DimHeader"/>
             <span class="small" style="vertical-align: 15%; font-size: 25%;">(Type is <xsl:value-of select="$myType"/>)
+            <input type="text" id="{$myJSVarName}.comment" size="8" oninput="autoResize(event)" onfocus="describe_index()"
+                   onChange="DAP2_URL.update_url()"/>
             </span>
+            <span class="xsmall">(<xsl:value-of select="$myJSVarName" />)</span>
         </div>
-
-        <xsl:call-template name="DimSlicing">
-            <xsl:with-param name="myJSVarName" select="$myJSVarName"/>
-        </xsl:call-template>
-
-        <xsl:if test="$isArray='false' and not(self::dap:Structure) and parent::dap:Sequence">
-            <xsl:call-template name="selectionOperator">
-                <xsl:with-param name="myJSVarName" select="$myJSVarName"/>
-                <xsl:with-param name="index" select="'0'"/>
-            </xsl:call-template>
-        </xsl:if>
-
 
     </xsl:template>
     <!-- ################################################################### -->
 
 
-    <!-- ###################################################################
-     -
-     -    Dimension Slicing Controls
-     -
-     -
-    -->
-    <xsl:template name="DimHeader">
-
-        <xsl:for-each select="dap:dimension">
-            <xsl:variable name="dimSize">
-                <xsl:value-of select="@size"/>
-            </xsl:variable>
-            <span class="medium">[
-                <xsl:if test="@name">
-                    <span class="small" style="vertical-align: 15%;">
-                        <xsl:value-of select="@name"/>=
-                    </span>
-                </xsl:if>
-                0
-                <span class="medium" style="vertical-align: 10%;">..</span>
-                <xsl:value-of select="$dimSize - 1"/>]
-            </span>
-        </xsl:for-each>
-    </xsl:template>
-
-    <xsl:template name="DimSlicing">
-        <xsl:param name="myJSVarName"/>
-
-        <xsl:for-each select="dap:dimension">
-            <xsl:variable name="dimSize">
-                <xsl:value-of select="@size"/>
-            </xsl:variable>
-            <xsl:variable name="dimTag" select="concat($myJSVarName,'_dim_',position())"/>
-
-            <input type="text" id="{$dimTag}" size="8" oninput="autoResize(event)" onfocus="describe_index()"
-                   onChange="DAP2_URL.update_url()"/>
-            <xsl:element name="script">
-                <xsl:attribute name="type">text/javascript</xsl:attribute>
-                <xsl:value-of select="$myJSVarName"/>.addDimension(<xsl:value-of select="$dimTag"/>,<xsl:value-of
-                    select="$dimSize"/>);
-            </xsl:element>
-        </xsl:for-each>
-    </xsl:template>
-
-
-
-
-    <!-- ###################################################################
-     -
-     -    Selection Controls
-     -
-     -
-    -->
-    <xsl:template name="selectionOperator">
-        <xsl:param name="myJSVarName"/>
-        <xsl:param name="index"/>
-
-        <xsl:variable name="relOpWidget">
-            <xsl:value-of select="$myJSVarName"/>_relOpWidget_<xsl:value-of select="$index"/>
-        </xsl:variable>
-        <xsl:variable name="rValueWidget">
-            <xsl:value-of select="$myJSVarName"/>_rValueWidget_<xsl:value-of select="$index"/>
-        </xsl:variable>
-
-        <xsl:variable name="selectionId" select="concat($myJSVarName,'_selection')" />
-
-
-        <div class="medium" style="margin-left: 10px;padding: 1px;" >
-            <xsl:value-of select="@name"/>
-            <select id="{$relOpWidget}" onfocus="describe_selection()" onchange="DAP2_URL.update_url()">
-                <option value="=" selected="">=</option>
-                <option value="!=">!=</option>
-                <option value="&lt;">&lt;</option>
-                <option value="&lt;=">&lt;=</option>
-                <option value=">">&gt;</option>
-                <option value=">=">&gt;=</option>
-                <option value="-">--</option>
-            </select>
-            <input type="text" id="{$rValueWidget}" size="6" onFocus="describe_selection()"
-                   onChange="DAP2_URL.update_url()"/>
-            <img style="width: 30px;" src="{$docsService}/images/filter-inactive.png" id="{$selectionId}" />
-        </div>
-
-        <xsl:element name="script">
-            <xsl:attribute name="type">text/javascript</xsl:attribute>
-            <xsl:value-of select="$myJSVarName"/>.addSelectionClause("<xsl:value-of select="$selectionId"/>", <xsl:value-of select="$relOpWidget"/>,<xsl:value-of
-                select="$rValueWidget"/>);
-        </xsl:element>
-
-    </xsl:template>
 
 
 
@@ -561,7 +451,9 @@
             <xsl:when test="dap:Attribute">
                 <div class="tightView">
 
-                    <ul class="collapsibleList">
+                    <!-- @FIXME This implementation of collapsible lists does not allow textfields in the list to modifed.  We should replace this with a more forgiving implementation.
+                    -->
+                    <ul class="collapsibleList" >
                         <li>
                             <div class="small_bold" style="color:#527CC1;">attributes</div>
                             <ul>
@@ -579,6 +471,10 @@
 
 
     <xsl:template match="dap:Attribute">
+
+        <xsl:variable name="myJSVarName">
+            <xsl:call-template name="computeVarName"/>
+        </xsl:variable>
 
         <xsl:choose>
             <xsl:when test="dap:Attribute">
@@ -605,7 +501,11 @@
                         <span class="em">
                             <xsl:for-each select="dap:value"><xsl:if test="(position( )) > 1">, </xsl:if><xsl:value-of select="."/></xsl:for-each>
                         </span>
+                        <input type="text" id="{$myJSVarName}.comment" size="8" oninput="autoResize(event)" onfocus="describe_index()"
+                               onChange="DAP2_URL.update_url()"/>
+                        <span class="xsmall">(<xsl:value-of select="$myJSVarName" />)</span>
                     </div>
+
                 </li>
 
             </xsl:otherwise>
@@ -765,72 +665,6 @@
       -
       -
      -->
-    <xsl:template match="dap:Gwrid">
-        <xsl:param name="parentContainer"/>
-
-        <xsl:variable name="myFQN">
-            <xsl:call-template name="computeFQN"><xsl:with-param name="separator">.</xsl:with-param></xsl:call-template>
-        </xsl:variable>
-
-        <xsl:variable name="myJSVarName"><xsl:call-template name="computeVarName"/></xsl:variable>
-
-        <xsl:variable name="isContainer">true</xsl:variable>
-
-        <xsl:variable name="checkBoxName" select="concat('get_',$myJSVarName)"/>
-
-        <xsl:variable name="gridArray" select="dap:Array"/>
-
-        <xsl:variable name="myType" select="$gridArray" />
-
-
-        <xsl:element name="script">
-            <xsl:attribute name="type">text/javascript</xsl:attribute>
-            <xsl:value-of select="$myJSVarName"/> = new dap_var("<xsl:value-of select="$myFQN"/>", "<xsl:value-of select="$myJSVarName"/>",false,false);
-
-            <xsl:if test="parent::dap:Dataset">
-                DAP2_URL.add_dap_var(<xsl:value-of select="$myJSVarName"/>);
-            </xsl:if>
-
-            <xsl:value-of select="$myJSVarName"/>.checkBox = "<xsl:value-of select="$checkBoxName"/>";
-            <xsl:if test="$parentContainer">
-                <xsl:comment>- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</xsl:comment>
-                <xsl:comment>Added by dap:Grid because test="$parentContainer" is true.</xsl:comment>
-                <xsl:value-of select="$parentContainer"/>.addChildVar(<xsl:value-of select="$myJSVarName"/>);
-                <xsl:value-of select="$myJSVarName"/>.parentContainer = <xsl:value-of select="$parentContainer"/>;
-                <xsl:comment>- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</xsl:comment>
-            </xsl:if>
-        </xsl:element>
-
-
-
-        <div style="color: black;margin-left:-15px;margin-top:10px">
-            <input type="checkbox" id="{$checkBoxName}" onclick="{$myJSVarName}.handle_projection_change({$checkBoxName})"  onfocus="describe_projection()" />
-            <xsl:value-of select="@name"/>
-
-            <!-- span class="small">
-                <xsl:if test="$container">
-                    (child of <xsl:value-of select="$container"/>)
-                </xsl:if>
-            </span -->
-            <xsl:apply-templates select="$gridArray">
-                <xsl:with-param name="parentContainer"><xsl:call-template name="computeVarName"/></xsl:with-param>
-            </xsl:apply-templates>
-            <!-- xsl:call-template name="DimHeader" / -->
-            <span class="small" style="vertical-align: 15%;"> (Type is <xsl:value-of select ="$myType"/>)</span>
-        </div>
-
-        <!-- xsl:call-template name="DimSlicing">
-            <xsl:with-param name="myJSVarName" select="$myJSVarName"/>
-        </xsl:call-template -->
-
-
-    </xsl:template>
-
-
-
-
-
-
 
 
     <xsl:template match="dap:Grid">
@@ -882,32 +716,22 @@
 
 
         <div style="color: black;margin-left:-15px;margin-top:10px">
-            <input type="checkbox" id="{$checkBoxName}" onclick="{$myJSVarName}.handle_projection_change({$checkBoxName})"  onfocus="describe_projection()" />
             <xsl:value-of select="@name"/>
-
-            <!-- span class="small">
-                <xsl:if test="$container">
-                    (child of <xsl:value-of select="$container"/>)
-                </xsl:if>
-            </span -->
-
-            <xsl:for-each select="$gridArray"><xsl:call-template name="DimHeader"/></xsl:for-each>
-
             <span class="small" style="vertical-align: 15%;"> (Grid of <xsl:value-of select ="$gridDataType"/> values)</span>
+            <input type="text" id="{$myJSVarName}.comment" size="8" oninput="autoResize(event)" onfocus="describe_index()"
+                   onChange="DAP2_URL.update_url()"/>
+            <span class="xsmall">(<xsl:value-of select="$myJSVarName" />)</span>
         </div>
 
-        <xsl:for-each select="$gridArray">
-            <xsl:call-template name="DimSlicing">
-                <xsl:with-param name="myJSVarName" select="$myJSVarName"/>
-            </xsl:call-template>
-            <xsl:call-template name="AttributesPresentation"/>
+        <xsl:for-each select="$gridArray" >
+            <xsl:call-template name="AttributesPresentation" />
         </xsl:for-each>
 
     </xsl:template>
 
 
 
-    <xsl:template match="dap:Map | dap:Array">
+    <!-- xsl:template match="dap:Map | dap:Array">
         <xsl:param name="parentContainer"/>
         <xsl:choose>
             <xsl:when test="$parentContainer">
@@ -921,7 +745,7 @@
                 <xsl:call-template name="VariableWorker"/>
             </xsl:otherwise>
         </xsl:choose>
-    </xsl:template>
+    </xsl:template -->
 
     <!-- Suppress the "blob" element -->
     <xsl:template match="dap:blob" />

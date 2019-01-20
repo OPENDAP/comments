@@ -3,43 +3,64 @@
 
 package org.opendap.rest.controller;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.regex.Pattern;
-
+import net.sf.saxon.s9api.SaxonApiException;
+import org.jdom2.Document;
+import org.jdom2.JDOMException;
+import org.jdom2.output.Format;
+import org.jdom2.output.XMLOutputter;
+import org.jdom2.transform.JDOMSource;
 import org.opendap.beans.FeedbackData;
 import org.opendap.beans.FeedbackForm;
 import org.opendap.feedback.FeedbackRepository;
+import org.opendap.servlet.PathBuilder;
+import org.opendap.servlet.ServiceStringEncoding;
+import org.opendap.servlet.Transformer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-//import org.opendap.feedback.FeedbackRepositoryCustom;
-//import org.opendap.feedback.FeedbackRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Controller;
-// import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServlet;
+import java.io.*;
+import java.net.URL;
+import java.net.URLConnection;
+
+//import org.opendap.feedback.FeedbackRepositoryCustom;
+//import org.opendap.feedback.FeedbackRepositoryImpl;
+// import org.springframework.ui.ModelMap;
 //import org.springframework.web.bind.annotation.ModelAttribute;
 //import org.springframework.ui.ModelMap;
 
 @Controller
 public class FeedbackFormController {
 
-	private static final Logger log = LoggerFactory.getLogger(FeedbackFormController.class);
-	
+	private static final Logger _log = LoggerFactory.getLogger(FeedbackFormController.class);
+
+
 	@Autowired
 	private FeedbackRepository repository;
 
-	private String url;
+    private ServletContext servletContext;
+
+
+    public void setServletContext(ServletContext servletContext) {
+        this.servletContext = servletContext;
+    }
+
+    public ServletContext getServletContext() {
+        return servletContext;
+    }
+
+
+    private String url;
 	 
 	public String getUrl() {
 		return url;
@@ -77,11 +98,21 @@ public class FeedbackFormController {
 		try {
 			urlContent = getUrlText(url + ".info");
 		} catch (Exception e) {
-			log.error("Could not get info for the dataset url: {}", url);
+			_log.error("Could not get info for the dataset url: {}", url);
 			urlContent = "Could not get info for the dataset url";
 		}
+        String form =null;
+        try {
+            form = getFormForDataset(url);
 
-		FeedbackForm ffb = new FeedbackForm(url, urlContent);
+
+
+        } catch (IOException | JDOMException | SaxonApiException e) {
+            e.printStackTrace();
+        }
+
+
+        FeedbackForm ffb = new FeedbackForm(url, form);
 
 		// Args: name of the view to render, name of the model in that view and the model. jhrg 11/9/18
 		return new ModelAndView("feedback_form", "feedback_form_info", ffb);
@@ -90,8 +121,8 @@ public class FeedbackFormController {
 	@RequestMapping(value = "/feedback/form", method = RequestMethod.POST)
 	public ModelAndView addFeedbackData(@ModelAttribute("FeedbackData") FeedbackData feedbackData) {
 
-		log.debug("addFeedbackData; feedbackData.getUrl(): {}\n", feedbackData.getUrl());
-		log.debug("addFeedbackData; FeedbackFormController.getUrl(): {}\n", getUrl());
+		_log.debug("addFeedbackData; feedbackData.getUrl(): {}\n", feedbackData.getUrl());
+		_log.debug("addFeedbackData; FeedbackFormController.getUrl(): {}\n", getUrl());
 
 		feedbackData.setUrl(getUrl());
 
@@ -105,104 +136,62 @@ public class FeedbackFormController {
 		} else {
 			repository.save(feedbackData); // writes a new record
 		}
-		
-		log.debug("addFeedbackData; FeedbackData from form: {}\n", feedbackData.toString());
+		_log.debug("addFeedbackData; FeedbackData from form: {}\n", feedbackData.toString());
 
 		return new ModelAndView("form_result", "form_info", feedbackData);
 	}
 
 
+    public String getFormForDataset(String datasetUrl) throws JDOMException, IOException, SaxonApiException {
 
-/*
 
-    @Override
-    public String getXmlBase(HttpServletRequest req){
+        String xsltDocName = "dap2_feedback_form.xsl";
+        File xsltFile;
 
-        String requestUrl = ReqInfo.getRequestUrlPath(req);
-        String xmlBase = Util.dropSuffixFrom(requestUrl, Pattern.compile(getCombinedRequestSuffixRegex()));
-        _log.debug("getXmlBase(): @xml:base='{}'", xmlBase);
-        return xmlBase;
-    }
-    */
+        Resource xsltFileResource = new ClassPathResource(xsltDocName);
+        if(xsltFileResource.exists()){
+// @FIXME This never happens as the previous call to new ClassPathResource(xsltDocName) never actually finds the file.
+            xsltFile = xsltFileResource.getFile();
+        }
+        else {
+            // @FIXME this is a hack for development and MUST be replaced.
+            String xslDir = "/Users/ndp/OPeNDAP/hyrax/feedback/src/main/resources/static/xsl";
+            String xsltTransformFileName = PathBuilder.pathConcat(xslDir,xsltDocName);
+            xsltFile =  new File(xsltTransformFileName);
+        }
 
-/*
-	public void sendNormativeRepresentation(HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-		// String context = request.getContextPath();
-		String requestedResourceId = org.opendap.servlet.ReqInfo.getLocalUrl(request);
-		String xmlBase = getXmlBase(request);
-
-		String resourceID = getResourceId(requestedResourceId, false);
-
-		String collectionUrl = ReqInfo.getCollectionUrl(request);
-
-		//QueryParameters qp = new QueryParameters(request);
-		Request oreq = new Request(null,request);
-
-		String constraintExpression = ReqInfo.getConstraintExpression(request);
-
-		BesApi besApi = getBesApi();
-
-		_log.debug("sendNormativeRepresentation() - Sending {} for dataset: {}",getServiceTitle(),resourceID);
-
-		MediaType responseMediaType = getNormativeMediaType();
-
-		// Stash the Media type in case there's an error. That way the error handler will know how to encode the error.
-		RequestCache.put(OPeNDAPException.ERROR_RESPONSE_MEDIA_TYPE_KEY, responseMediaType);
-
-		response.setContentType(responseMediaType.getMimeType());
-		Version.setOpendapMimeHeaders(request, response, besApi);
-		response.setHeader("Content-Description", getNormativeMediaType().getMimeType());
-		// Commented because of a bug in the OPeNDAP C++ stuff...
-		//response.setHeader("Content-Encoding", "plain");
+		_log.debug("getFormForDataset() - Retrieving DDX for dataset: {}",datasetUrl);
 
 		XMLOutputter xmlo = new XMLOutputter(Format.getPrettyFormat());
-		Document ddx = new Document();
-		besApi.getDDXDocument(resourceID,constraintExpression,"3.2",xmlBase,ddx);
+		Document ddx = Transformer.getXMLDoc(datasetUrl + ".ddx");
 		_log.debug(xmlo.outputString(ddx));
 
-		OutputStream os = response.getOutputStream();
-		ddx.getRootElement().setAttribute("dataset_id",resourceID);
-		ddx.getRootElement().setAttribute("base", xmlBase, Namespace.XML_NAMESPACE);   // not needed - DMR has it
+        try {
+            // This Transformer class is an attempt at making the use of the saxon-9 API
+            // a little simpler to use. It makes it easy to set input parameters for the stylesheet.
+            // See the source code in opendap.xml.Transformer for more.
+            Transformer transformer = new Transformer(xsltFile);
+            // transformer.setParameter("serviceContext", request.getServletContext().getContextPath()); // This is ServletAPI-3.0
+            transformer.setParameter("serviceContext", ""); // This is ServletAPI-2.5 (Tomcat 6 stopped here)
+            transformer.setParameter("docsService", "");
+            transformer.setParameter("HyraxVersion", "DUF");
 
-		String jsonLD = getDatasetJsonLD(collectionUrl,ddx);
+            ByteArrayOutputStream os = new ByteArrayOutputStream();
 
-		_log.error(jsonLD);
-
-		String currentDir = System.getProperty("user.dir");
-		_log.debug("Cached working directory: "+currentDir);
-
-
-		String xslDir = new PathBuilder(_systemPath).pathAppend("xsl").toString();
-
-		_log.debug("Changing working directory to "+ xslDir);
-		System.setProperty("user.dir",xslDir);
-
-		try {
-			String xsltDocName = "dap2_ifh.xsl";
-
-			// This Transformer class is an attempt at making the use of the saxon-9 API
-			// a little simpler to use. It makes it easy to set input parameters for the stylesheet.
-			// See the source code in opendap.xml.Transformer for more.
-			Transformer transformer = new Transformer(xsltDocName);
-			// transformer.setParameter("serviceContext", request.getServletContext().getContextPath()); // This is ServletAPI-3.0
-			transformer.setParameter("serviceContext", request.getContextPath()); // This is ServletAPI-2.5 (Tomcat 6 stopped here)
-			transformer.setParameter("docsService", oreq.getDocsServiceLocalID());
-			transformer.setParameter("HyraxVersion", Version.getHyraxVersionString());
-			transformer.setParameter("JsonLD", jsonLD);
-
-			AuthenticationControls.setLoginParameters(transformer,request);
-
-			// Transform the BES  showCatalog response into a HTML page for the browser
-			transformer.transform(new JDOMSource(ddx), os);
-			os.flush();
-			_log.info("Sent {}", getServiceTitle());
-		}
-		finally {
-			_log.debug("Restoring working directory to " + currentDir);
-			System.setProperty("user.dir", currentDir);
-		}
+            // Transform the BES  showCatalog response into a HTML page for the browser
+            transformer.transform(new JDOMSource(ddx), os);
+            _log.debug("Transformed {} result size is {} bytes", datasetUrl, os.size());
+            ByteArrayInputStream bis = new ByteArrayInputStream(os.toByteArray());
+            String s = new String(os.toByteArray(),ServiceStringEncoding.getCharset());
+            return s;
+        }
+        finally {
+            //_log.debug("Restoring working directory to " + originalDir);
+           // System.setProperty("user.dir", originalDir);
+            _log.debug("getFormForDataset() - fini");
+        }
 	}
 
-*/
+
+
 }

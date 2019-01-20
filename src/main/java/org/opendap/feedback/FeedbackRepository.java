@@ -1,11 +1,11 @@
 
 package org.opendap.feedback;
 
-import java.util.List;
-
 import org.opendap.beans.FeedbackData;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
+
+import java.util.List;
 
 // No need to provide an implementation, just one interface, and you have CRUD, thanks Spring Data
 // can add 'extends, FeedbackRepositoryCustom'

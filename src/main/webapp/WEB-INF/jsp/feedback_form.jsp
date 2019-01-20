@@ -58,7 +58,6 @@
  <div class="large" style="margin-left: 10px;margin-top: 10px">${feedback_form_info.url}</div>
 <h2>Feedback Form</h2>
 
-
 	<div class="container">
         <form action="" method="post">
         	<p>
