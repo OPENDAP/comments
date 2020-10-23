@@ -57,7 +57,9 @@ public class FeedbackFormController {
 	@RequestMapping("/")
 	public String login() {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		log.debug("feedbackForm: login(/): {}", auth.getPrincipal());
+		log.debug("root: auth details: {}", auth.getDetails());
+		log.debug("root: auth principal: {}", auth.getPrincipal());
+		log.debug("root: auth is auth: {}", auth.isAuthenticated());
 		return "/index";
 	}
 
@@ -91,7 +93,9 @@ public class FeedbackFormController {
 
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
-		log.debug("feedbackForm: auth principal: {}", auth.getDetails());
+		log.debug("/feedback/form: auth details: {}", auth.getDetails());
+		log.debug("/feedback/form: auth principal: {}", auth.getPrincipal());
+		log.debug("/feedback/form: auth is auth: {}", auth.isAuthenticated());
 
 		setUrl(url);	// Save for later
 
