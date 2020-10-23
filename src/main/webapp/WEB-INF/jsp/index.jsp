@@ -1,13 +1,83 @@
-<!DOCTYPE html>
-<html>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ page import="org.opendap.utils.ReqInfo" %>
+<%@ page import="java.security.Principal" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<%@page session="false" %>
+
+<%
+    String userId = ReqInfo.getUserId(request);
+    /*
+    String contextPath = request.getContextPath();
+    String serviceUrl = ReqInfo.getServiceUrl(request);
+    String request_url = request.getRequestURL().toString();
+    String protocol= request.getProtocol();
+    String server= request.getServerName();
+    int port = request.getServerPort();
+    String forwardRequestUri = (String) request.getAttribute("javax.servlet.forward.request_uri");
+    */
+
+%>
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <!-- Access the bootstrap CSS like this,
+    Spring boot will handle the resource mapping automatically -->
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <spring:url value="/images/logo.png" var="logoImage" />
+    <spring:url value="/css/contents.css" var="springCss" />
+    <spring:url value="/feedback/database" var="DatabaseInspection" />
+    <spring:url value="/index" var="home" />
+    <spring:url value="/about" var="about" />
+
+    <link href="${springCss}" rel="stylesheet" />
+
+    <title>ESIP Dataset Feedback System</title>
 </head>
 <body>
+<<<<<<< HEAD
 <!-- /login is the default supported by Spring Boot. See class HttpSecurity::oauth2Login().
 	From the comments there:The default configuration provides an auto-generated 
 	login page at /login and redirects to /login?error when an authentication error
 	occurs. The login page will display each of the clients with a link that is 
 	capable of initiating the 'authentication flow.' jhrg 12/31/18 -->
 <a href="/login">Login with Google</a>
+=======
+
+<table width="100%"><tr>
+    <td>
+        <div style="text-align: left;">
+            <a href="http://www.opendap.org"><img  alt="OPeNDAP Logo" src="${logoImage}"/></a>
+        </div>
+    </td>
+    <td>
+        <div style='float: right;vertical-align:top;text-align: right;font-size: x-small;'>
+            <% if(userId==null || userId.length()==0){ %>
+                <a href="/login"><b>login</b></a>
+            <% } else { %>
+            <div><a href="/profile"><%=userId%></a></div>
+            <div style="margin-top: 2px"><a href="/logout">logout</a></div>
+            <% } %>
+        </div>
+        <div class="medium" style="margin-top: 25px;text-align: center;"><em>Welcome to the ESIP Dataset Feedback System</em> </div>
+        <div class="small" style="margin-top: 5px;text-align: center;">
+            <span><a href="${home}">Home</a></span>
+            <span><a href="${DatabaseInspection}">DB-Dump</a></span>
+            <span><a href="${about}">About</a></span>
+        </div>
+    </td>
+</tr></table>
+
+<h2>Dataset Feedback</h2>
+<hr size="1" noshade="noshade"/>
+<div class="small">We've got a lot of stuff to say about all this noise...</div>
+<div class="small">Let's put it here, shall we?</div>
+<div style="margin-top: 10px;"><a href="/feedback/form">Find the Dataset Feedback Form here.</a></div>
+<hr size="1" noshade="noshade"/>
+<h3>OPeNDAP/ESIP Dataset Annotation System (@DUF_VERSION@)</h3>
+
+>>>>>>> 1610fc6a224241b2e5574cb821454c4fe4fa9b09
 </body>
 </html>

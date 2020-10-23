@@ -8,3 +8,11 @@
 
 *.class
 /dump/
+
+.DS_Store
+.idea
+*.iml
+*.ipr
+*.iws
+lib
+out

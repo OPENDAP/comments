@@ -8,15 +8,33 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @Configuration
 @EnableOAuth2Sso
 public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
-	
-	@Override
+
+    @Override
     protected void configure(HttpSecurity http) throws Exception {
-		http
-	      .antMatcher("/**")
-	      .authorizeRequests()
-				.antMatchers("/", "/feedback/form**", "/feedback/database**", "/login**", "/webjars/**", "/error**")
-	        .permitAll()
-	      .anyRequest()
-	        .authenticated();
+        http
+                .regexMatcher("^\\/login$|^\\/feedback\\/(form|database)$")
+                .authorizeRequests()
+                .anyRequest()
+                .authenticated()
+                //.and().oauth2Login()
+        ;
+    }
+
+    //@Override
+    protected void Mconfigure(HttpSecurity http) throws Exception {
+        http
+                .regexMatcher("^\\/.*$")
+                .authorizeRequests()
+                .antMatchers("/", "/logout", "/index", "/css/**",  "/images/**")
+                .permitAll()
+                .anyRequest()
+                .authenticated()
+                .and().logout()
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/index")
+                .and().oauth2Login()
+
+
+        ;
     }
 }
